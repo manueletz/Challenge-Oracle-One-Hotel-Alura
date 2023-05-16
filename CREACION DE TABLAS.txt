@@ -1,0 +1,22 @@
+CREATE TABLE huespedes (
+id INT(10) AUTO_INCREMENT,
+nombre VARCHAR(50) NOT NULL,
+apellido VARCHAR(50) NOT NULL,
+fecha_nacimiento DATE NOT NULL,
+nacionalidad VARCHAR(50) NOT NULL,
+telefono VARCHAR(20) NOT NULL,
+id_reserva INT(10),
+
+PRIMARY KEY (id),
+FOREIGN KEY (id_reserva) REFERENCES reservas(id) 
+);
+
+CREATE TABLE reservas (
+id  INT(10) AUTO_INCREMENT,
+fecha_entrada DATE NOT NULL,
+fecha_salida DATE NOT NULL,
+valor FLOAT,
+forma_pago VARCHAR(50) NOT NULL, 
+
+PRIMARY KEY (id)
+);
