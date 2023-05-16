@@ -9,7 +9,7 @@ El Hotel Alura conocido por su espectaculares instalaciones y paquetes promocion
 
 ✔️ **Objetivo**
 
-El hotel solicita nuestra ayuda para desarrollar un sistema de reserva
+El hotel solicita nuestra ayuda para desarrollar un sistema de reserva.
 
 ✔️ **Requisitos**
 
@@ -24,7 +24,7 @@ El hotel solicita nuestra ayuda para desarrollar un sistema de reserva
 
 El líder del proyecto puso a disposición un Diagrama de Entidad Relación que usaremos para crear las tablas en nuestra base de Datos
 
-✔️ ** 🖥️ Tecnologías Utilizadas:
+✔️ 🖥️ **Tecnologías Utilizadas:
 
 - Java
 - Eclipse
