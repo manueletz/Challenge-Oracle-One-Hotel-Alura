@@ -1,4 +1,4 @@
-package com.alura.tests;
+package com.alura.pruebas;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
