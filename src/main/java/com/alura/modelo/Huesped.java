@@ -10,18 +10,18 @@ public class Huesped {
 
 	private String apellido;
 	
-	private Date fecha_nacimiento;
+	private Date fechaNacimiento;
 	
 	private String nacionalidad;
 	
 	private String telefono;
 	
-	private Integer id_reserva;
+	private Integer idReserva;
 
 	public Huesped(String nombre, String apellido, Date fecha_nacimiento, String nacionalidad, String telefono) {
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.fecha_nacimiento = fecha_nacimiento;
+		this.fechaNacimiento = fecha_nacimiento;
 		this.nacionalidad = nacionalidad;
 		this.telefono = telefono;
 	}
@@ -30,7 +30,7 @@ public class Huesped {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.fecha_nacimiento = fecha_nacimiento;
+		this.fechaNacimiento = fecha_nacimiento;
 		this.nacionalidad = nacionalidad;
 		this.telefono = telefono;
 	}
@@ -43,8 +43,8 @@ public class Huesped {
 		return apellido;
 	}
 
-	public Date getFecha_nacimiento() {
-		return fecha_nacimiento;
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
 	}
 
 	public String getNacionalidad() {
@@ -63,33 +63,32 @@ public class Huesped {
 		this.id = id;
 	}
 
-	public Integer getId_reserva() {
-		return id_reserva;
+	public Integer getIdReserva() {
+		return idReserva;
 	}
 
-	public void setId_reserva(Integer id_reserva) {
-		this.id_reserva = id_reserva;
+	public void setIdReserva(Integer idReserva) {
+		this.idReserva = idReserva;
 	}
 
 	@Override
 	public String toString() {
 
 		return "Huesped [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fecha_nacimiento="
-				+ fecha_nacimiento + ", nacionalidad=" + nacionalidad + ", telefono=" + telefono + ", id_reserva="
-				+ id_reserva + "]";
+				+ fechaNacimiento + ", nacionalidad=" + nacionalidad + ", telefono=" + telefono + ", id_reserva="
+				+ idReserva + "]";
 
-		
 		/*
 		return String.format(
 				"{id: %s, nombre: %s, apellido: %s,"
-				+ " fecha_nacimiento: %s, nacionalidad: %s, telefono: %s}",
+				+ " fechaNacimiento: %s, nacionalidad: %s, telefono: %s}",
 				this.id,
 				this.nombre,
 				this.apellido,
-				this.fecha_nacimiento,
-				this.nacionalidad,
-				this.telefono);
+				this.fechaNacimiento,
+				this.nacionalidad);
 		*/
+
 	}
 	
 	

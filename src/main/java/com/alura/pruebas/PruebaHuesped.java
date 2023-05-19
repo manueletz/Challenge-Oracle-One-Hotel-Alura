@@ -13,16 +13,17 @@ public class PruebaHuesped {
 		SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 		
 		//Date date = new Date();
-		
+		Date datefinal=new Date();
 		try {
-		date = dateformat.parse("18-05-2023");
-		System.out.println(dateformat.format(date));
+		datefinal = dateformat.parse("18-05-2023");
+		System.out.println(dateformat.format(datefinal));
 		}catch(ParseException e) {
 			throw new RuntimeException(e);
 		}
 		
 		
-		Huesped huesped = new Huesped(1, "manuel", "estevez", '2023-05-05', "Salvadoreña", "77887788");
+		//Huesped huesped = new Huesped(1, "manuel", "estevez", '2023-05-05', "Salvadoreña", "77887788");
+		Huesped huesped = new Huesped(1, "manuel", "estevez", datefinal, "Salvadoreña", "77887788");
 		
 		System.out.println(huesped);
 		
