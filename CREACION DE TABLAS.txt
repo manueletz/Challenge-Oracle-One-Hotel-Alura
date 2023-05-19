@@ -20,3 +20,6 @@ forma_pago VARCHAR(50) NOT NULL,
 
 PRIMARY KEY (id)
 );
+
+
+https://www.javatpoint.com/java-simpledateformat
