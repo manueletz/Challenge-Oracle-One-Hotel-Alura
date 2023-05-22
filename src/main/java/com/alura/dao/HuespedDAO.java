@@ -22,9 +22,9 @@ public class HuespedDAO {
 	public void guardar(Huesped huesped) {
 		try(con) {
 			final PreparedStatement statement = con.prepareStatement(
-					"INSERT INTO PRODUCTO "
+					"INSERT INTO HUESPEDES "
 					+"(nombre, apellido, fecha_nacimiento, nacionalidad, telefono, id_reserva)"
-					+ " VALUES(?, ?, ?, ?)",
+					+ " VALUES(?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			try (statement) {

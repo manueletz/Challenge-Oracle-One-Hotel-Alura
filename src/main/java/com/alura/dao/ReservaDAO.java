@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,7 @@ import com.alura.modelo.Reserva;
 
 public class ReservaDAO {
 	
-	private Connection con;
+	final private Connection con;
 
 	public ReservaDAO(Connection con) {
 		this.con = con;
@@ -52,7 +54,7 @@ public class ReservaDAO {
 		return resultado;
 	}
 
-	public List<Reserva> listarConProductos() {
+	public List<Reserva> listarConHuespedes() {
 		List<Reserva> resultado = new ArrayList<>();
 		
 		try {
@@ -105,6 +107,53 @@ public class ReservaDAO {
 		}
 		
 		return resultado;
+	}
+
+	public void guardar(Reserva reserva) {
+		try(con) {
+			final PreparedStatement statement = con.prepareStatement(
+					"INSERT INTO RESERVAS "
+					+"(FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO)"
+					+ " VALUES(?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			try (statement) {
+				ejecutaRegistro(reserva, statement);
+			} 
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+	private void ejecutaRegistro(Reserva reserva, PreparedStatement statement) throws SQLException {
+	    //Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    //String strDate= formatter.format(date);  
+	    //System.out.println(strDate); 
+	    
+	    String strFechaEntrada = formatter.format(reserva.getFechaEntrada());
+	    String strFechaSalida = formatter.format(reserva.getFechaSalida());
+		
+//		statement.setDate(1, (java.sql.Date) reserva.getFechaEntrada());
+//		statement.setDate(2, (java.sql.Date) reserva.getFechaSalida());
+		statement.setString(1, strFechaEntrada);
+		statement.setString(2, strFechaSalida);
+		statement.setInt(3, reserva.getValor());
+		statement.setString(4, reserva.getFormaPago());
+		
+		statement.execute();
+		
+		final ResultSet resultSet = statement.getGeneratedKeys();
+		
+		try(resultSet){
+			while (resultSet.next()) {
+				reserva.setId(resultSet.getInt(1));
+				System.out.println(String.format(
+						"Fue insertado la reserva con ID %s", reserva));
+			}
+		}
+		
 	}
 
 }

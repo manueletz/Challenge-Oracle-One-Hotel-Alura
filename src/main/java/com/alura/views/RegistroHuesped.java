@@ -38,6 +38,8 @@ public class RegistroHuesped extends JFrame {
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
+	
+	private static Integer idReserva;
 
 	/**
 	 * Launch the application.
@@ -46,7 +48,7 @@ public class RegistroHuesped extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroHuesped frame = new RegistroHuesped();
+					RegistroHuesped frame = new RegistroHuesped(idReserva);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +60,8 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped() {
+	public RegistroHuesped(int idReserva) {
+		this.idReserva = idReserva;
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/com/alura/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -151,7 +154,7 @@ public class RegistroHuesped extends JFrame {
 		txtNacionalidad.setBounds(560, 350, 289, 36);
 		txtNacionalidad.setBackground(SystemColor.text);
 		txtNacionalidad.setFont(new Font("Roboto", Font.PLAIN, 16));
-		txtNacionalidad.setModel(new DefaultComboBoxModel(new String[] {"afgano-afgana", "alemÃ¡n-", "alemana", "Ã¡rabe-Ã¡rabe", "argentino-argentina", "australiano-australiana", "belga-belga", "boliviano-boliviana", "brasileÃ±o-brasileÃ±a", "camboyano-camboyana", "canadiense-canadiense", "chileno-chilena", "chino-china", "colombiano-colombiana", "coreano-coreana", "costarricense-costarricense", "cubano-cubana", "danÃ©s-danesa", "ecuatoriano-ecuatoriana", "egipcio-egipcia", "salvadoreÃ±o-salvadoreÃ±a", "escocÃ©s-escocesa", "espaÃ±ol-espaÃ±ola", "estadounidense-estadounidense", "estonio-estonia", "etiope-etiope", "filipino-filipina", "finlandÃ©s-finlandesa", "francÃ©s-francesa", "galÃ©s-galesa", "griego-griega", "guatemalteco-guatemalteca", "haitiano-haitiana", "holandÃ©s-holandesa", "hondureÃ±o-hondureÃ±a", "indonÃ©s-indonesa", "inglÃ©s-inglesa", "iraquÃ­-iraquÃ­", "iranÃ­-iranÃ­", "irlandÃ©s-irlandesa", "israelÃ­-israelÃ­", "italiano-italiana", "japonÃ©s-japonesa", "jordano-jordana", "laosiano-laosiana", "letÃ³n-letona", "letonÃ©s-letonesa", "malayo-malaya", "marroquÃ­-marroquÃ­", "mexicano-mexicana", "nicaragÃ¼ense-nicaragÃ¼ense", "noruego-noruega", "neozelandÃ©s-neozelandesa", "panameÃ±o-panameÃ±a", "paraguayo-paraguaya", "peruano-peruana", "polaco-polaca", "portuguÃ©s-portuguesa", "puertorriqueÃ±o-puertorriqueÃ±o", "dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca", "suizo-suiza", "tailandÃ©s-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana", "uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita"}));
+		txtNacionalidad.setModel(new DefaultComboBoxModel(new String[] {"afgano-afgana", "alemán-", "alemana", "árabe-árabe", "argentino-argentina", "australiano-australiana", "belga-belga", "boliviano-boliviana", "brasileño-brasileña", "camboyano-camboyana", "canadiense-canadiense", "chileno-chilena", "chino-china", "colombiano-colombiana", "coreano-coreana", "costarricense-costarricense", "cubano-cubana", "danés-danesa", "ecuatoriano-ecuatoriana", "egipcio-egipcia", "salvadoreño-salvadoreña", "escocés-escocesa", "español-española", "estadounidense-estadounidense", "estonio-estonia", "etiope-etiope", "filipino-filipina", "finlandés-finlandesa", "francés-francesa", "galés-galesa", "griego-griega", "guatemalteco-guatemalteca", "haitiano-haitiana", "holandés-holandesa", "hondureño-hondureña", "indonés-indonesa", "inglés-inglesa", "iraquí-iraquí", "iraní-iraní", "irlandés-irlandesa", "israelí-israelí", "italiano-italiana", "japonés-japonesa", "jordano-jordana", "laosiano-laosiana", "letón-letona", "letonés-letonesa", "malayo-malaya", "marroquí-marroquí", "mexicano-mexicana", "nicaragüense-nicaragüense", "noruego-noruega", "neozelandés-neozelandesa", "panameño-panameña", "paraguayo-paraguaya", "peruano-peruana", "polaco-polaca", "portugués-portuguesa", "puertorriqueño-puertorriqueño", "dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca", "suizo-suiza", "tailandés-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana", "uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita"}));
 		contentPane.add(txtNacionalidad);
 		
 		JLabel lblNombre = new JLabel("NOMBRE");
@@ -178,7 +181,7 @@ public class RegistroHuesped extends JFrame {
 		lblNacionalidad.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		contentPane.add(lblNacionalidad);
 		
-		JLabel lblTelefono = new JLabel("TELÃ‰FONO");
+		JLabel lblTelefono = new JLabel("TELÉFONO");
 		lblTelefono.setBounds(562, 406, 253, 14);
 		lblTelefono.setForeground(SystemColor.textInactiveText);
 		lblTelefono.setFont(new Font("Roboto Black", Font.PLAIN, 18));
@@ -192,13 +195,13 @@ public class RegistroHuesped extends JFrame {
 		txtTelefono.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentPane.add(txtTelefono);
 		
-		JLabel lblTitulo = new JLabel("REGISTRO HUÃ‰SPED");
+		JLabel lblTitulo = new JLabel("REGISTRO HUÉSPED");
 		lblTitulo.setBounds(606, 55, 234, 42);
 		lblTitulo.setForeground(new Color(12, 138, 199));
 		lblTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 23));
 		contentPane.add(lblTitulo);
 		
-		JLabel lblNumeroReserva = new JLabel("NÃšMERO DE RESERVA");
+		JLabel lblNumeroReserva = new JLabel("NÚMERO DE RESERVA");
 		lblNumeroReserva.setBounds(560, 474, 253, 14);
 		lblNumeroReserva.setForeground(SystemColor.textInactiveText);
 		lblNumeroReserva.setFont(new Font("Roboto Black", Font.PLAIN, 18));
@@ -210,6 +213,9 @@ public class RegistroHuesped extends JFrame {
 		txtNreserva.setColumns(10);
 		txtNreserva.setBackground(Color.WHITE);
 		txtNreserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		
+		txtNreserva.setText(String.valueOf(idReserva));
+		
 		contentPane.add(txtNreserva);
 		
 		JSeparator separator_1_2 = new JSeparator();
@@ -316,7 +322,7 @@ public class RegistroHuesped extends JFrame {
 	}
 	
 	
-	//CÃ³digo que permite mover la ventana por la pantalla segÃºn la posiciÃ³n de "x" y "y"	
+	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();

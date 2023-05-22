@@ -138,7 +138,7 @@ public class MenuUsuario extends JFrame {
 		panelMenu.add(btnBusqueda);
 		btnBusqueda.setLayout(null);
 		
-		JLabel lblBusquedaDeReservas = new JLabel("B√∫squeda");
+		JLabel lblBusquedaDeReservas = new JLabel("B˙squeda");
 		lblBusquedaDeReservas.setIcon(new ImageIcon(MenuUsuario.class.getResource("/com/alura/imagenes/pessoas.png")));
 		lblBusquedaDeReservas.setBounds(27, 11, 200, 34);
 		lblBusquedaDeReservas.setHorizontalAlignment(SwingConstants.LEFT);
@@ -209,25 +209,25 @@ public class MenuUsuario extends JFrame {
 	    lblNewLabel.setBounds(302, 234, 147, 46);
 	    contentPane.add(lblNewLabel);
 	    
-	    String textoDescripcion = "<html><body>Sistema de reserva de hotel. Controle y administre de forma √≥ptima y f√°cil <br> el flujo de reservas y de huesp√©des del hotel   </body></html>";
+	    String textoDescripcion = "<html><body>Sistema de reserva de hotel. Controle y administre de forma Ûptima y f·cil <br> el flujo de reservas y de huÈspedes del hotel   </body></html>";
 	    JLabel labelDescripcion = new JLabel(textoDescripcion);
 	    labelDescripcion.setFont(new Font("Roboto", Font.PLAIN, 17));
 	   
 	    labelDescripcion.setBounds(312, 291, 598, 66);
 	    contentPane.add(labelDescripcion);
 	    
-	    String textoDescripcion1 = "<html><body> Esta herramienta le permitir√° llevar un control completo y detallado de sus reservas y hu√©spedes, tendr√° acceso a heramientas especiales para tareas espec√≠ficas como lo son:</body></html>";
+	    String textoDescripcion1 = "<html><body> Esta herramienta le permitir· llevar un control completo y detallado de sus reservas y huÈspedes, tendr· acceso a herramientas especiales para tareas especÌficas como lo son:</body></html>";
 	    JLabel labelDescripcion_1 = new JLabel(textoDescripcion1);
 	    labelDescripcion_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 	    labelDescripcion_1.setBounds(311, 345, 569, 88);
 	    contentPane.add(labelDescripcion_1);
 	    
-	    JLabel lblNewLabel_3 = new JLabel("- Registro de Reservas y Hu√©spedes");
+	    JLabel lblNewLabel_3 = new JLabel("- Registro de Reservas y HuÈspedes");
 	    lblNewLabel_3.setFont(new Font("Roboto", Font.PLAIN, 17));
 	    lblNewLabel_3.setBounds(312, 444, 295, 27);
 	    contentPane.add(lblNewLabel_3);
 	    
-	    JLabel lblNewLabel_3_1 = new JLabel("- Edici√≥n de Reservas y Hu√©spedes existentes");
+	    JLabel lblNewLabel_3_1 = new JLabel("- EdiciÛn de Reservas y HuÈspedes existentes");
 	    lblNewLabel_3_1.setFont(new Font("Roboto", Font.PLAIN, 17));
 	    lblNewLabel_3_1.setBounds(312, 482, 355, 27);
 	    contentPane.add(lblNewLabel_3_1);

@@ -1,8 +1,12 @@
 package com.alura.modelo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class Reserva {
 	
@@ -25,9 +29,36 @@ public class Reserva {
 		this.valor = valor;
 		this.formaPago = formaPago;
 	}
+	
+	public Reserva(Date fechaEntrada, Date fechaSalida, Integer valor, String formaPago) {
+		this.fechaEntrada = fechaEntrada;
+		this.fechaSalida = fechaSalida;
+		this.valor = valor;
+		this.formaPago = formaPago;
+	}
 
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getFechaEntrada() {
+		return fechaEntrada;
+	}
+
+	public Date getFechaSalida() {
+		return fechaSalida;
+	}
+
+	public Integer getValor() {
+		return valor;
+	}
+
+	public String getFormaPago() {
+		return formaPago;
 	}
 
 	@Override
@@ -48,6 +79,33 @@ public class Reserva {
 		return this.huespedes;
 	}
 	
+	public long DiasEntreDosFechas(Date fechaEntrada, Date fechaSalida){
+//	    Date firstDate = formatoFecha.parse("04/22/2020");
+//	    Date secondDate = formatoFecha.parse("04/27/2020");
+	    Date primeraFecha;
+	    Date segundaFecha;
+	    SimpleDateFormat formatoFecha = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+		try {
+			primeraFecha = formatoFecha.parse(String.valueOf(fechaEntrada));
+			segundaFecha = formatoFecha.parse(String.valueOf(fechaSalida));
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+
+	    long diferencia = segundaFecha.getTime() - primeraFecha.getTime();
+	    
+	    TimeUnit time = TimeUnit.DAYS; 
+	    long diferenciaDias = time.convert(diferencia, TimeUnit.MILLISECONDS);
+
+	    System.out.println("The difference in days is : "+diferenciaDias);
+	    return diferenciaDias;
+	}
+	
+	public int calcularTarifaEstadia(Date fechaEntrada, Date fechaSalida) {
+		int diasEstadia = (int) DiasEntreDosFechas(fechaEntrada, fechaSalida);
+		int tarifaDiaria = 20;
+		return diasEstadia * tarifaDiaria;
+	}
 
 	/*
 	private Integer id;
