@@ -282,49 +282,63 @@ public class ReservasView extends JFrame {
 		txtFechaSalida.getCalendarButton().setBounds(267, 1, 21, 31);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
-		txtValor = new JTextField();// Se traslado para poderlo utilizar
-		JPanel btnsiguiente = new JPanel(); // se traslado para poder desactivar
 
-		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
-			int valorTotalReserva = 0;
 
-			public void propertyChange(PropertyChangeEvent evt) {
-				// Activa el evento, despues que el usuario selecciona las fechas se debe
-				// calcular el valor de la reserva
-				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null && inicio==false) {
-					try {
-						valorTotalReserva = calcularTarifaEstadia(ReservasView.txtFechaEntrada.getDate(),
-								ReservasView.txtFechaSalida.getDate());
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (valorTotalReserva > 0 && valorTotalReserva <= 365) {
-						btnsiguiente.setVisible(true);
-						txtValor.setText(String.valueOf(valorTotalReserva));
-					} else {
-						btnsiguiente.setVisible(false);
-						JOptionPane.showMessageDialog(null, "Favor de verificar fechas");
-						if (valorTotalReserva > 365) {
-							JOptionPane.showMessageDialog(null,
-									"No se permiten reservaciones de mas de 365 días, favor verificar");
-						}
-						if (valorTotalReserva < 0) {
-							JOptionPane.showMessageDialog(null,
-									"La fecha final debe ser mayor a la inicial, favor verificar");
-						}
-					}
 
-				} else {
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
-				}
-
-			}
-		});
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 		panel.add(txtFechaSalida);
+		
+		
+		
+		txtValor = new JTextField();// Se traslado para poderlo utilizar
+		JPanel btnsiguiente = new JPanel(); // se traslado para poder desactivar
+		
+		
+		txtFechaEntrada.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				//Acciones para activar el evento de fecha Final cuando se cambia la fecha de inicio
+				//y calcule el nuevo ValorTotalReserva
+				Date fechaSalidaActual = ReservasView.txtFechaSalida.getDate();
+				ReservasView.txtFechaSalida.setDate(null);
+				ReservasView.txtFechaSalida.setDate(fechaSalidaActual);
+			}
+		});
+		
+		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
+			int valorTotalReserva = 0;
+			int diasEstadia = 0;
+
+			public void propertyChange(PropertyChangeEvent evt) {
+				// Activa el evento, despues que el usuario selecciona las fechas se debe
+				// calcular el valor de la reserva
+				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
+					
+					diasEstadia = DiasEstadia();
+					valorTotalReserva = calcularTarifaEstadia(diasEstadia);
+
+					if (diasEstadia > 0 && diasEstadia <= 365) {
+						btnsiguiente.setVisible(true);
+						txtValor.setText(String.valueOf(valorTotalReserva));
+					} else {
+						btnsiguiente.setVisible(false);
+						//JOptionPane.showMessageDialog(null, "Favor de verificar fechas");
+						if (diasEstadia > 365) {
+							JOptionPane.showMessageDialog(null, "No se permiten reservaciones de mas de 365 días, favor verificar");
+						}
+						if (diasEstadia < 0) {
+							JOptionPane.showMessageDialog(null, "La fecha final debe ser mayor a la inicial, favor verificar");
+						}
+						txtValor.setText("");
+					}
+				} else {
+					txtValor.setText("");
+				}
+
+			}
+		});
+		
 
 		// txtValor = new JTextField(); Se traslada para antes de txtFechaSalida para
 		// desactivar si hay error
@@ -354,7 +368,7 @@ public class ReservasView extends JFrame {
 		btnsiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null && inicio==false) {
+				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
 
 					Reserva reserva = new Reserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate(),
 							Integer.valueOf(txtValor.getText()), (String) txtFormaPago.getSelectedItem());
@@ -367,7 +381,11 @@ public class ReservasView extends JFrame {
 
 					registro.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+//					System.out.println("aqui paso2");
+//					System.out.println(inicio);
+//					if (inicio==false) {
+						JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+//					}
 				}
 			}
 		});
@@ -388,46 +406,23 @@ public class ReservasView extends JFrame {
 
 	}
 
-	public long DiasEntreDosFechas(Date fechaEntrada, Date fechaSalida) throws ParseException {
+	public int DiasEstadia() {
+		int valor;
+		java.sql.Date fechaEntrada =  new java.sql.Date(txtFechaEntrada.getDate().getTime()) ;
+		java.sql.Date fechaSalida = new java.sql.Date(txtFechaSalida.getDate().getTime());
 		
-		System.out.println(fechaEntrada.toString());
-		System.out.println(fechaSalida.toString());
-
-		//System.out.println(String.valueOf(fechaEntrada));
-		//System.out.println(fechaSalida);
+		int dias = (int)((txtFechaSalida.getDate().getTime()  - 
+				txtFechaEntrada.getDate().getTime())/(1000 * 60 * 60 * 24));
 		
+		return dias;
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E MMM dd 00:00:00 z yyyy");
-		Date fechaInicio = simpleDateFormat.parse(fechaEntrada.toString());
-		Date fechaFin = simpleDateFormat.parse(fechaSalida.toString());
-		
-
-		System.out.println(fechaInicio);
-		System.out.println(fechaSalida);
-		
-		SimpleDateFormat formatoFecha = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-//	    Date firstDate = formatoFecha.parse("04/22/2020");
-//	    Date secondDate = formatoFecha.parse("04/27/2020");
-
-		//System.out.println(fechaEntrada);
-		//System.out.println(fechaSalida);
-
-		Date primeraFecha = formatoFecha.parse(fechaEntrada.toString());
-		Date segundaFecha = formatoFecha.parse(fechaSalida.toString());
-
-		long diferencia = segundaFecha.getTime() - primeraFecha.getTime();
-
-		TimeUnit time = TimeUnit.DAYS;
-		long diferenciaDias = time.convert(diferencia, TimeUnit.MILLISECONDS);
-
-		System.out.println("The difference in days is : " + diferenciaDias);
-		return diferenciaDias;
 	}
-
-	public int calcularTarifaEstadia(Date fechaEntrada, Date fechaSalida) throws ParseException {
-		int diasEstadia = (int) DiasEntreDosFechas(fechaEntrada, fechaSalida);
-		int tarifaDiaria = 20;
-		return diasEstadia * tarifaDiaria;
+	
+	
+	public int calcularTarifaEstadia(int dias) {
+		int valor;
+		valor = dias * 20;
+		return valor;
 	}
 
 	// CÃ³digo que permite mover la ventana por la pantalla segÃºn la posiciÃ³n de
