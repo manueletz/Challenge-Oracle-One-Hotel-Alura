@@ -45,7 +45,7 @@ public class ReservasView extends JFrame {
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	private ReservaController reservaController;
-	boolean inicio = true; 
+	boolean inicio = true;
 
 	/**
 	 * Launch the application.
@@ -378,7 +378,7 @@ public class ReservasView extends JFrame {
 					Integer numeroReservaActual = reserva.getId();
 
 					RegistroHuesped registro = new RegistroHuesped(numeroReservaActual);
-
+					
 					registro.setVisible(true);
 				} else {
 //					System.out.println("aqui paso2");

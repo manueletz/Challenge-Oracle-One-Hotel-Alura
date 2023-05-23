@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +38,16 @@ public class HuespedDAO {
 	
 	private void ejecutaRegistro(Huesped huesped, PreparedStatement statement)
 			throws SQLException {
+		
+	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    //String strDate= formatter.format(date);  
+	    //System.out.println(strDate); 
+	    
+	    String strFechaNacimiento = formatter.format(huesped.getFechaNacimiento());
+		
 		statement.setString(1, huesped.getNombre());
 		statement.setString(2, huesped.getApellido());
-		statement.setDate(3, (java.sql.Date) huesped.getFechaNacimiento());
+		statement.setString(3, strFechaNacimiento);
 		statement.setString(4, huesped.getNacionalidad());
 		statement.setString(5, huesped.getTelefono());
 		statement.setInt(6, huesped.getIdReserva());

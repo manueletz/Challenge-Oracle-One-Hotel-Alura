@@ -42,7 +42,7 @@ public class RegistroHuesped extends JFrame {
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
-	private static Integer idReserva=1;
+	private static Integer idReserva;//=1;
 	private HuespedController huespedController;
 	
 
@@ -65,7 +65,7 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public RegistroHuesped(int idReserva) {
 		this.idReserva = idReserva;
 		
@@ -108,6 +108,7 @@ public class RegistroHuesped extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ReservasView reservas = new ReservasView();
+				
 				reservas.setVisible(true);
 				dispose();				
 			}
@@ -271,25 +272,22 @@ public class RegistroHuesped extends JFrame {
 				if (RegistroHuesped.txtNombre.getText() != null && RegistroHuesped.txtApellido.getText() != null && RegistroHuesped.txtFechaN.getDate() != null &&
 						RegistroHuesped.txtNacionalidad.getSelectedItem() != null && RegistroHuesped.txtTelefono.getText() != null) {
 
-					
 					Huesped huesped = new Huesped(RegistroHuesped.txtNombre.getText(), RegistroHuesped.txtApellido.getText(), RegistroHuesped.txtFechaN.getDate(),
 							(String) RegistroHuesped.txtNacionalidad.getSelectedItem(), RegistroHuesped.txtTelefono.getText());
 					
-					huesped.setIdReserva(idReserva);
-					
-					huespedController.guardar(huesped);
+					try {
+						huespedController.guardar(huesped, idReserva);
+						dispose();
+						Exito exito = new Exito();
+						exito.setVisible(true);
+					} catch (Exception error) {
+						JOptionPane.showMessageDialog(null, "Lo sentimos no fue posible guardar los datos");
+						throw new RuntimeException(error);
 
-					Integer numeroReservaActual = reserva.getId();
+					}
 
-					RegistroHuesped registro = new RegistroHuesped(numeroReservaActual);
-
-					registro.setVisible(true);
 				} else {
-//					System.out.println("aqui paso2");
-//					System.out.println(inicio);
-//					if (inicio==false) {
 						JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
-//					}
 				}
 				
 			}
