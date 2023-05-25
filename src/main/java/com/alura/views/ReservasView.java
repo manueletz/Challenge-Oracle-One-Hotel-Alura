@@ -325,7 +325,7 @@ public class ReservasView extends JFrame {
 						btnsiguiente.setVisible(false);
 						//JOptionPane.showMessageDialog(null, "Favor de verificar fechas");
 						if (diasEstadia > 365) {
-							JOptionPane.showMessageDialog(null, "No se permiten reservaciones de mas de 365 días, favor verificar");
+							JOptionPane.showMessageDialog(null, "Lo sentimos, no se permiten reservaciones de mas de 365 días, favor verificar");
 						}
 						if (diasEstadia < 0) {
 							JOptionPane.showMessageDialog(null, "La fecha final debe ser mayor a la inicial, favor verificar");
