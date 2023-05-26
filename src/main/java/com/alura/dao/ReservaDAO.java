@@ -75,8 +75,8 @@ public class ReservaDAO {
 		}
 	}
 
-	private void transformarResultSetEnReservas(List<Reserva> reservas, PreparedStatement resultSet) throws SQLException {
-		try(ResultSet rst = resultSet.getResultSet()){
+	private void transformarResultSetEnReservas(List<Reserva> reservas, PreparedStatement pstm) throws SQLException {
+		try(ResultSet rst = pstm.getResultSet()){
 			while (rst.next()) {
 				Reserva reserva = new Reserva(rst.getInt(1), rst.getDate(2), rst.getDate(3), rst.getInt(4), rst.getString(5));
 				

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.alura.modelo.Huesped;
+import com.alura.modelo.Reserva;
 
 public class HuespedDAO {
 	
@@ -19,6 +20,37 @@ public class HuespedDAO {
 	public HuespedDAO(Connection con) {
 		this.con = con;
 	}
+	
+	public List<Huesped> buscar() {
+
+		List<Huesped> huesped = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT ID, NOMBRE, APELLIDO, FECHA_NACIMIENTO, NACIONALIDAD, TELEFONO, ID_RESERVA FROM HUESPEDES";
+			System.out.println(sql);
+		
+			try(PreparedStatement pstm = con.prepareStatement(sql);){
+				pstm.execute();
+				
+				transformarResultSetEnReservas(huesped, pstm);
+			}
+			return huesped;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void transformarResultSetEnReservas(List<Huesped> huespedes, PreparedStatement pstm) throws SQLException {
+		try(ResultSet rst = pstm.getResultSet()){
+			while (rst.next()) {
+				Huesped huesped = new Huesped(rst.getInt(1), rst.getString(2), rst.getString(3), rst.getDate(4), rst.getString(5), rst.getString(6), rst.getInt(7));
+				//System.out.println(huesped);
+				huespedes.add(huesped);
+			}
+		}
+		
+	}
+	
 	
 	public void guardar(Huesped huesped) {
 		try(con) {

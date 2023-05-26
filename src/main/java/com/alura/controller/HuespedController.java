@@ -30,6 +30,10 @@ public class HuespedController {
 		return huespedDao.listar();
 	}
 	
+	public List<Huesped> buscar() {
+		return huespedDao.buscar();
+	}
+	
 	public List<Huesped> listar(Reserva reserva){
 		return huespedDao.listar(reserva.getId());
 	}

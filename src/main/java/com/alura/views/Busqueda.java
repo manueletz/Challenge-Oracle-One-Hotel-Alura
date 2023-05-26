@@ -7,7 +7,9 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.alura.controller.HuespedController;
 import com.alura.controller.ReservaController;
+import com.alura.modelo.Huesped;
 import com.alura.modelo.Reserva;
 
 import javax.swing.JTable;
@@ -43,6 +45,7 @@ public class Busqueda extends JFrame {
 	private JLabel labelExit;
 	int xMouse, yMouse;
 	private ReservaController reservaController;
+	private HuespedController huespedController;
 
 	/**
 	 * Launch the application.
@@ -65,6 +68,7 @@ public class Busqueda extends JFrame {
 	 */
 	public Busqueda() {
 		this.reservaController = new ReservaController();
+		this.huespedController = new HuespedController();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/com/alura/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,14 +100,12 @@ public class Busqueda extends JFrame {
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
 
-		
-		
-		
+
 		tbReservas = new JTable();
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		modelo = (DefaultTableModel) tbReservas.getModel();
-		modelo.addColumn("Numero de Reserva");
+		modelo.addColumn("Número de Reserva");
 		modelo.addColumn("Fecha Check In");
 		modelo.addColumn("Fecha Check Out");
 		modelo.addColumn("Valor");
@@ -117,17 +119,17 @@ public class Busqueda extends JFrame {
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 16));
 		modeloHuesped = (DefaultTableModel) tbHuespedes.getModel();
-		modeloHuesped.addColumn("NÃºmero de Huesped");
+		modeloHuesped.addColumn("Número de Huesped");
 		modeloHuesped.addColumn("Nombre");
 		modeloHuesped.addColumn("Apellido");
 		modeloHuesped.addColumn("Fecha de Nacimiento");
 		modeloHuesped.addColumn("Nacionalidad");
 		modeloHuesped.addColumn("Telefono");
-		modeloHuesped.addColumn("NÃºmero de Reserva");
+		modeloHuesped.addColumn("Número de Reserva");
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
 		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/com/alura/imagenes/pessoas.png")), scroll_tableHuespedes, null);
 		scroll_tableHuespedes.setVisible(true);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Busqueda.class.getResource("/com/alura/imagenes/Ha-100px.png")));
 		lblNewLabel_2.setBounds(56, 51, 104, 107);
@@ -223,7 +225,14 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LlenarTablaResevas();
+				//LlenarTablaResevas();
+				System.out.println(panel.getTabComponentAt(0));
+				System.out.println(panel.getTabComponentAt(1));
+				System.out.println(panel.getComponent(0).getName());
+				System.out.println(panel.getComponents());
+
+				
+				LlenarTablaHuespedes();
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -300,6 +309,28 @@ public class Busqueda extends JFrame {
 		 } catch (Exception e) {
 			 throw e;
 		 }
+	 }
+
+	 private List<Huesped> buscarHuespedes() {
+		 return this.huespedController.buscar();
+	 }
+	 
+	 private void LlenarTablaHuespedes() {
+		 //Llenar tabla
+		 List<Huesped> huesped = buscarHuespedes();
+		 
+		 try {
+			 for (Huesped huespedes : huesped) {
+				 System.out.println(huespedes);
+				 
+				 modeloHuesped.addRow(new Object[] { huespedes.getId(), huespedes.getNombre(), huespedes.getApellido(),
+						 huespedes.getFechaNacimiento(), huespedes.getNacionalidad(), huespedes.getTelefono(), huespedes.getIdReserva() });
+				 
+			 }
+		 } catch (Exception e) {
+			 throw e;
+		 }
+		 
 	 }
 	    
 }
