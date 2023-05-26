@@ -22,11 +22,12 @@ public class ReservaDAO {
 		this.con = con;
 	}
 
+	/*
 	public List<Reserva> listar() {
 		List<Reserva> resultado = new ArrayList<>();
 		
 		try {
-			var querySelect = "SELECT ID, FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO FROM CATEGORIA";
+			var querySelect = "SELECT ID, FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO FROM RESERVAS";
 			System.out.println(querySelect);
 			
 			final PreparedStatement statement = con.prepareStatement(
@@ -52,6 +53,37 @@ public class ReservaDAO {
 		}
 		
 		return resultado;
+	}
+	*/
+
+	public List<Reserva> buscar() {
+
+		List<Reserva> reservas = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT ID, FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO FROM RESERVAS";
+			System.out.println(sql);
+		
+			try(PreparedStatement pstm = con.prepareStatement(sql);){
+				pstm.execute();
+				
+				transformarResultSetEnReservas(reservas, pstm);
+			}
+			return reservas;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void transformarResultSetEnReservas(List<Reserva> reservas, PreparedStatement resultSet) throws SQLException {
+		try(ResultSet rst = resultSet.getResultSet()){
+			while (rst.next()) {
+				Reserva reserva = new Reserva(rst.getInt(1), rst.getDate(2), rst.getDate(3), rst.getInt(4), rst.getString(5));
+				
+				reservas.add(reserva);
+			}
+		}
+		
 	}
 
 	public List<Reserva> listarConHuespedes() {

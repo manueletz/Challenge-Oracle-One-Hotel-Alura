@@ -18,10 +18,13 @@ public class ReservaController {
 		var factory = new ConnectionFactory();
 		this.reservaDAO = new ReservaDAO(factory.recuperaConexion());
 	}
-	
 
-	public List<Reserva> listar() {
-		return reservaDAO.listar();
+//	public List<Reserva> listar() {
+//		return reservaDAO.listar();
+//	}
+	
+	public List<Reserva> buscar() {
+		return reservaDAO.buscar();
 	}
 
     public List<Reserva> cargaReporte() {

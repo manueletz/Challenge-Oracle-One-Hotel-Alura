@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.alura.controller.ReservaController;
+import com.alura.modelo.Reserva;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -38,6 +42,7 @@ public class Busqueda extends JFrame {
 	private JLabel labelAtras;
 	private JLabel labelExit;
 	int xMouse, yMouse;
+	private ReservaController reservaController;
 
 	/**
 	 * Launch the application.
@@ -59,6 +64,8 @@ public class Busqueda extends JFrame {
 	 * Create the frame.
 	 */
 	public Busqueda() {
+		this.reservaController = new ReservaController();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/com/alura/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
@@ -118,7 +125,7 @@ public class Busqueda extends JFrame {
 		modeloHuesped.addColumn("Telefono");
 		modeloHuesped.addColumn("Número de Reserva");
 		JScrollPane scroll_tableHuespedes = new JScrollPane(tbHuespedes);
-		panel.addTab("Huéspedes", new ImageIcon(Busqueda.class.getResource("/com/alura/imagenes/pessoas.png")), scroll_tableHuespedes, null);
+		panel.addTab("Hu�spedes", new ImageIcon(Busqueda.class.getResource("/com/alura/imagenes/pessoas.png")), scroll_tableHuespedes, null);
 		scroll_tableHuespedes.setVisible(true);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -216,7 +223,7 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				LlenarTablaResevas();
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -268,9 +275,31 @@ public class Busqueda extends JFrame {
 	        yMouse = evt.getY();
 	    }
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+	 private void headerMouseDragged(java.awt.event.MouseEvent evt) {
 	        int x = evt.getXOnScreen();
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
-}
+	 }
+	 
+	 private List<Reserva> buscarReservas(){
+		 return this.reservaController.buscar();
+	 }
+	 
+	 private void LlenarTablaResevas() {
+		 
+		 //Llenar tabla
+		 List<Reserva> reserva = buscarReservas();
+		 
+		 try {
+			 for (Reserva reservas : reserva) {
+				 
+				 modelo.addRow(new Object[] { reservas.getId(), reservas.getFechaEntrada(), reservas.getFechaSalida(),
+						 reservas.getValor(), reservas.getFormaPago() });
+				 
+			 }
+		 } catch (Exception e) {
+			 throw e;
+		 }
+	 }
+	    
 }
