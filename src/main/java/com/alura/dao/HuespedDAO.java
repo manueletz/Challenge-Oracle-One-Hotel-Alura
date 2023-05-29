@@ -39,6 +39,50 @@ public class HuespedDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public List<Huesped> buscarPorTextoBusqueda(String textoBusqueda) {
+		List<Huesped> huesped = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT ID, NOMBRE, APELLIDO, FECHA_NACIMIENTO,"
+					+ " NACIONALIDAD, TELEFONO, ID_RESERVA FROM HUESPEDES WHERE APELLIDO = ? ";
+					//+ " OR ID_RESERVA = ? ";
+			System.out.println(sql);
+		
+			try(PreparedStatement pstm = con.prepareStatement(sql);){
+				pstm.setString(1, textoBusqueda);
+				//pstm.setInt(2, Integer.valueOf(textoBusqueda));
+				pstm.execute();
+				
+				transformarResultSetEnReservas(huesped, pstm);
+			}
+			return huesped;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Huesped> buscarPorIdReservaBusqueda(int idReserva) {
+		List<Huesped> huesped = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT ID, NOMBRE, APELLIDO, FECHA_NACIMIENTO,"
+					+ " NACIONALIDAD, TELEFONO, ID_RESERVA FROM HUESPEDES WHERE ID_RESERVA = ? ";
+					//+ " OR ID_RESERVA = ? ";
+			System.out.println(sql);
+		
+			try(PreparedStatement pstm = con.prepareStatement(sql);){
+				pstm.setInt(1, idReserva);
+				//pstm.setInt(2, Integer.valueOf(textoBusqueda));
+				pstm.execute();
+				
+				transformarResultSetEnReservas(huesped, pstm);
+			}
+			return huesped;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	private void transformarResultSetEnReservas(List<Huesped> huespedes, PreparedStatement pstm) throws SQLException {
 		try(ResultSet rst = pstm.getResultSet()){

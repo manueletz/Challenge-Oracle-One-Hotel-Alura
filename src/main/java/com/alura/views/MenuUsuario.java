@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -158,7 +159,10 @@ public class MenuUsuario extends JFrame {
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
+				//System.exit(0);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -248,4 +252,14 @@ public class MenuUsuario extends JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }
+    
+	private void cerrar() {
+		String botones[] = {"Salir", "Cancelar"};
+		int eleccion = JOptionPane.showOptionDialog(this, "Realmente desea salir de la aplicación", "Salir Aplicación", 0, 0, null, botones, this);
+		if(eleccion==JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}else if(eleccion==JOptionPane.NO_OPTION){
+			System.out.println("Cierre cancelado");
+		}
+	}
 }

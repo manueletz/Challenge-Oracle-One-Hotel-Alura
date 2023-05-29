@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -225,15 +227,30 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//LlenarTablaResevas();
-				System.out.println(panel.getTabComponentAt(0));
-				System.out.println(panel.getTabComponentAt(1));
-				System.out.println(panel.getComponent(0).getName());
-				System.out.println(panel.getComponents());
-
+				LlenarTablaResevas();
+				//scroll_tableHuespedes.setVisible(true);
+				//tbReservas.repaint();
 				
-				LlenarTablaHuespedes();
+				
+				System.out.println("inicio");
+				System.out.println(txtBuscar.getText());
+				
+				if (txtBuscar.getText().equals(null) || txtBuscar.getText().equals("")) {
+					System.out.println("entro al if");
+					System.out.println(panel.getTabComponentAt(0));
+					System.out.println(panel.getTabComponentAt(1));
+					System.out.println(panel.getComponent(0).getName());
+					System.out.println(panel.getComponents());
+				
+					LlenarTablaHuespedes();
+				} else {
+					llenarTablaHuespedesPorTextoBuscado(txtBuscar.getText());
+				}
+				
+				panel.repaint();
+
 			}
+
 		});
 		btnbuscar.setLayout(null);
 		btnbuscar.setBackground(new Color(12, 138, 199));
@@ -300,6 +317,7 @@ public class Busqueda extends JFrame {
 		 List<Reserva> reserva = buscarReservas();
 		 
 		 try {
+			 deleteAllTableRows(tbReservas);
 			 for (Reserva reservas : reserva) {
 				 
 				 modelo.addRow(new Object[] { reservas.getId(), reservas.getFechaEntrada(), reservas.getFechaSalida(),
@@ -320,6 +338,7 @@ public class Busqueda extends JFrame {
 		 List<Huesped> huesped = buscarHuespedes();
 		 
 		 try {
+			 deleteAllTableRows(tbHuespedes);
 			 for (Huesped huespedes : huesped) {
 				 System.out.println(huespedes);
 				 
@@ -332,5 +351,63 @@ public class Busqueda extends JFrame {
 		 }
 		 
 	 }
+	 
+	private void cerrar() {
+		String botones[] = {"Salir", "Cancelar"};
+		int eleccion = JOptionPane.showOptionDialog(this, "Realmente desea salir de la aplicación", "Salir Aplicación", 0, 0, null, botones, this);
+		if(eleccion==JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}else if(eleccion==JOptionPane.NO_OPTION){
+			System.out.println("Cierre cancelado");
+		}
+	}
+	
+	 private List<Huesped> buscarHuespedesPorTextoBusqueda(String textoBusqueda) {
+		 return this.huespedController.buscarPorTextoBusqueda(textoBusqueda);
+	 }
+	 
+	 private List<Huesped> buscarPorIdReservaBusqueda(int idReserva) {
+		 return this.huespedController.buscarPorIdReservaBusqueda(idReserva);
+	 }
+	 
+	private void llenarTablaHuespedesPorTextoBuscado(String textoBusqueda) {
+		 //Llenar tabla
+		List<Huesped> huesped;
+		 if (!verificarEsNumero(textoBusqueda)){
+			 huesped = buscarHuespedesPorTextoBusqueda(textoBusqueda);
+		 }else {
+			 huesped = buscarPorIdReservaBusqueda(Integer.valueOf(textoBusqueda));
+		 }
+		 
+		 
+		 try {
+			 //modeloHuesped.setNumRows(0);
+			 deleteAllTableRows(tbHuespedes);
+			 //tbHuespedes.setModel(new DefaultTableModel(null, new String[]{"Número de Huesped","Nombre", "Apellido", "Fecha de Nacimiento","Nacionalidad", "Telefono","Número de Reserva"}));
+			 for (Huesped huespedes : huesped) {
+				 System.out.println(huespedes);
+				 
+				 modeloHuesped.addRow(new Object[] { huespedes.getId(), huespedes.getNombre(), huespedes.getApellido(),
+						 huespedes.getFechaNacimiento(), huespedes.getNacionalidad(), huespedes.getTelefono(), huespedes.getIdReserva() });
+				 
+			 }
+		 } catch (Exception e) {
+			 throw e;
+		 }
+		
+	}
+	
+	private boolean verificarEsNumero(String textoEvaluacion) {
+        boolean esNumero = (textoEvaluacion != null && textoEvaluacion.matches("[0-9]+"));
+        //System.out.println("IsNumeric: " + isNumeric);
+        return esNumero;
+    }
+	
+	private void deleteAllTableRows(JTable table) {
+	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    while( model.getRowCount() > 0 ){
+	        model.removeRow(0);
+	    }
+	}
 	    
 }

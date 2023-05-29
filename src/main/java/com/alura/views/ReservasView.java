@@ -379,7 +379,10 @@ public class ReservasView extends JFrame {
 
 					RegistroHuesped registro = new RegistroHuesped(numeroReservaActual);
 					
+					JOptionPane.showMessageDialog(null, "Reserva guardada con éxito, id: "+numeroReservaActual);
+					
 					registro.setVisible(true);
+					dispose();
 				} else {
 //					System.out.println("aqui paso2");
 //					System.out.println(inicio);
@@ -438,5 +441,14 @@ public class ReservasView extends JFrame {
 		this.setLocation(x - xMouse, y - yMouse);
 	}
 	
+	private void cerrar() {
+		String botones[] = {"Salir", "Cancelar"};
+		int eleccion = JOptionPane.showOptionDialog(this, "Realmente desea salir de la aplicación", "Salir Aplicación", 0, 0, null, botones, this);
+		if(eleccion==JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}else if(eleccion==JOptionPane.NO_OPTION){
+			System.out.println("Cierre cancelado");
+		}
+	}
 	
 }

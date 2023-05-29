@@ -397,15 +397,25 @@ public class RegistroHuesped extends JFrame {
 	
 	
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
-	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
-	        xMouse = evt.getX();
-	        yMouse = evt.getY();
-	    }
+	private void headerMousePressed(java.awt.event.MouseEvent evt) {
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
-	        int x = evt.getXOnScreen();
-	        int y = evt.getYOnScreen();
-	        this.setLocation(x - xMouse, y - yMouse);
-}
+	private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+	    int x = evt.getXOnScreen();
+	    int y = evt.getYOnScreen();
+	    this.setLocation(x - xMouse, y - yMouse);
+	}
+	
+	private void cerrar() {
+		String botones[] = {"Salir", "Cancelar"};
+		int eleccion = JOptionPane.showOptionDialog(this, "Realmente desea salir de la aplicación", "Salir Aplicación", 0, 0, null, botones, this);
+		if(eleccion==JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}else if(eleccion==JOptionPane.NO_OPTION){
+			System.out.println("Cierre cancelado");
+		}
+	}
 											
 }

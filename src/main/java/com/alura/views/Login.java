@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.alura.controller.UsuarioController;
+import com.alura.modelo.Usuario;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,6 +33,7 @@ public class Login extends JFrame {
 	private JPasswordField txtContrasena;
 	int xMouse, yMouse;
 	private JLabel labelExit;
+	private UsuarioController usuarioController = new UsuarioController();
 
 	/**
 	 * Launch the application.
@@ -50,6 +55,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,18 +79,14 @@ public class Login extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel imgHotel = new JLabel("");
-		imgHotel.setBounds(0, 0, 304, 538);
-		panel_1.add(imgHotel);
-		imgHotel.setIcon(new ImageIcon(Login.class.getResource("/com/alura/imagenes/img-hotel-login-.png")));
-		
 		JPanel btnexit = new JPanel();
 		btnexit.setBounds(251, 0, 53, 36);
 		panel_1.add(btnexit);
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				//System.exit(0);
+				cerrar();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -107,6 +109,11 @@ public class Login extends JFrame {
 		labelExit.setForeground(SystemColor.text);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);		
+		
+		JLabel imgHotel = new JLabel("");
+		imgHotel.setBounds(0, 0, 304, 538);
+		panel_1.add(imgHotel);
+		imgHotel.setIcon(new ImageIcon(Login.class.getResource("/com/alura/imagenes/img-hotel-login-.png")));
 		
 		txtUsuario = new JTextField();
 		txtUsuario.addMouseListener(new MouseAdapter() {
@@ -232,30 +239,89 @@ public class Login extends JFrame {
 		header.setBounds(0, 0, 784, 36);
 		panel.add(header);
 		header.setLayout(null);
+		
+		JPanel btnSalir = new JPanel();
+		btnSalir.setLayout(null);
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setBounds(426, 478, 59, 49);
+		panel.add(btnSalir);
+		
+		JLabel imagenSalir = new JLabel("");
+		imagenSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		imagenSalir.setIcon(new ImageIcon(Login.class.getResource("/com/alura/imagenes/cerrar-sesion 32-px.png")));
+		imagenSalir.setHorizontalAlignment(SwingConstants.CENTER);
+		imagenSalir.setBounds(0, 0, 59, 49);
+		btnSalir.add(imagenSalir);
 	}
 	
 	private void Login() {
-		 String Usuario= "admin";
-	     String Contrasena="admin";
+		/*//original
+		String Usuario= "admin";
+		String Contrasena="admin";
 
-	        String contrase=new String (txtContrasena.getPassword());
+        String contrase = new String (txtContrasena.getPassword());
 
-	        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Contrasena)){
-	            MenuUsuario menu = new MenuUsuario();
-	            menu.setVisible(true);
-	            dispose();	 
-	        }else {
-	            JOptionPane.showMessageDialog(this, "Usuario o ContraseÃ±a no vÃ¡lidos");
-	        }
+        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Contrasena)){
+            MenuUsuario menu = new MenuUsuario();
+            menu.setVisible(true);
+            dispose();	 
+        }else {
+            JOptionPane.showMessageDialog(this, "Usuario o ContraseÃ±a no vÃ¡lidos");
+        }
+        */
+		//String Usuario= "admin";
+		//String Contrasena="admin";
+		String usuarioEnTabla = "";
+		String claveEnTabla = "";
+		
+
+		String usuarioEnFormulario  = new String (txtUsuario.getText()); 
+        String claveEnFormulario = new String (txtContrasena.getPassword());
+        
+        Usuario usuarioBuscado = busquedaDelUsuario(usuarioEnFormulario);
+        
+        usuarioEnTabla = usuarioBuscado.getUsuario();
+        claveEnTabla = usuarioBuscado.getClave();
+        System.out.println(usuarioEnTabla);
+        System.out.println(claveEnTabla);
+       
+
+        //if(usuarioEnFormulario.equals(Usuario) && clave.equals(Clave)){
+        if(usuarioEnFormulario.equals(usuarioEnTabla) && claveEnFormulario.equals(claveEnTabla)){
+            MenuUsuario menu = new MenuUsuario();
+            menu.setVisible(true);
+            dispose();	 
+        }else {
+            JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
+        }
 	} 
-	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
-	        xMouse = evt.getX();
-	        yMouse = evt.getY();
-	    }//GEN-LAST:event_headerMousePressed
+	private void headerMousePressed(java.awt.event.MouseEvent evt) {
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_headerMousePressed
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
-	        int x = evt.getXOnScreen();
-	        int y = evt.getYOnScreen();
-	        this.setLocation(x - xMouse, y - yMouse);
-}
+	private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+	    int x = evt.getXOnScreen();
+	    int y = evt.getYOnScreen();
+	    this.setLocation(x - xMouse, y - yMouse);
+	}
+	
+	private void cerrar() {
+		String botones[] = {"Salir", "Cancelar"};
+		int eleccion = JOptionPane.showOptionDialog(this, "Realmente desea salir de la aplicación", "Salir Aplicación", 0, 0, null, botones, this);
+		if(eleccion==JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}else if(eleccion==JOptionPane.NO_OPTION){
+			System.out.println("Cierre cancelado");
+		}
+	}
+	
+	private Usuario busquedaDelUsuario(String nombreUsuario) {
+		return usuarioController.buscarPorNombreUsuario(nombreUsuario);
+	}
 }

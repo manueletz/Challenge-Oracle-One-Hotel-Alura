@@ -8,6 +8,7 @@ import java.awt.Panel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -108,7 +109,9 @@ public class MenuPrincipal extends JFrame {
 		btnexit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
+				//JOptionPane.showMessageDialog(null, "Realmente desea salir de la aplicación");
+				//System.exit(0);
+				cerrar();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -162,6 +165,24 @@ public class MenuPrincipal extends JFrame {
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(SystemColor.textHighlight);
 		lblTitulo.setFont(new Font("Roboto Light", Font.PLAIN, 20));
+		
+		JPanel btnSalir = new JPanel();
+		btnSalir.setLayout(null);
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setBounds(851, 452, 59, 49);
+		panel.add(btnSalir);
+		
+		JLabel imagenSalir = new JLabel("");
+		imagenSalir.setBounds(0, 0, 59, 49);
+		btnSalir.add(imagenSalir);
+		imagenSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+		});
+		imagenSalir.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/com/alura/imagenes/cerrar-sesion 32-px.png")));
+		imagenSalir.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	
 	//CÃ³digo que permite movimentar a janela pela tela seguindo a posiÃ§Ã£o de "x" e "y"	
@@ -173,5 +194,15 @@ public class MenuPrincipal extends JFrame {
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-}
+    }
+    
+    private void cerrar() {
+    	String botones[] = {"Salir", "Cancelar"};
+    	int eleccion = JOptionPane.showOptionDialog(this, "Realmente desea salir de la aplicación", "Salir Aplicación", 0, 0, null, botones, this);
+    	if(eleccion==JOptionPane.YES_OPTION) {
+    		System.exit(0);
+    	}else if(eleccion==JOptionPane.NO_OPTION){
+    		System.out.println("Cierre cancelado");
+    	}
+    }
 }
