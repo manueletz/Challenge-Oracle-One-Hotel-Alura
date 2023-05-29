@@ -22,7 +22,7 @@ public class UsuarioDAO {
 	public int eliminar(Integer id) {
 
 		try{
-			final PreparedStatement statement = con.prepareStatement("SELECT ID, USUARIO, CLAVE FROM PRODUCTO WHERE ID = ?");
+			final PreparedStatement statement = con.prepareStatement("SELECT ID, USUARIO, CLAVE FROM USUARIOS WHERE ID = ?");
 			
 			try(statement) {
 				statement.setInt(1, id);

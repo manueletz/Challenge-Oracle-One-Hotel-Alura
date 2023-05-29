@@ -40,7 +40,7 @@ public class HuespedDAO {
 		}
 	}
 	
-	public List<Huesped> buscarPorTextoBusqueda(String textoBusqueda) {
+	public List<Huesped> buscarHuespedesPorTextoBusqueda(String textoBusqueda) {
 		List<Huesped> huesped = new ArrayList<>();
 		
 		try {
@@ -62,7 +62,7 @@ public class HuespedDAO {
 		}
 	}
 	
-	public List<Huesped> buscarPorIdReservaBusqueda(int idReserva) {
+	public List<Huesped> buscarHuespedesPorIdReservaBusqueda(int idReserva) {
 		List<Huesped> huesped = new ArrayList<>();
 		
 		try {

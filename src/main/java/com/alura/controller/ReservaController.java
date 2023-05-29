@@ -38,5 +38,17 @@ public class ReservaController {
 	public int calcularTarifaEstadia(Date fechaEntrada, Date fechaSalida) {
 		return reserva.calcularTarifaEstadia(fechaEntrada, fechaSalida);
 	}
+	
+	public List<Reserva> buscarReservasPorTextoBusqueda(String textoBusqueda) {
+		return reservaDAO.buscarReservasPorTextoBusqueda(textoBusqueda);
+	}
+	
+	public List<Reserva> buscarReservasPorIdReservaBusqueda(int idReserva) {
+		return reservaDAO.buscarReservasPorIdReservaBusqueda(idReserva);
+	}
+
+	public void editarReserva(Reserva reserva) {
+		reservaDAO.editarReserva(reserva);
+	}
 
 }

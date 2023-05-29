@@ -43,12 +43,12 @@ public class HuespedController {
 		huespedDao.guardar(huesped);
 	}
 
-	public List<Huesped> buscarPorTextoBusqueda(String textoBusqueda) {
-		return huespedDao.buscarPorTextoBusqueda(textoBusqueda);
+	public List<Huesped> buscarHuespedesPorTextoBusqueda(String textoBusqueda) {
+		return huespedDao.buscarHuespedesPorTextoBusqueda(textoBusqueda);
 	}
 	
-	public List<Huesped> buscarPorIdReservaBusqueda(int idReserva) {
-		return huespedDao.buscarPorIdReservaBusqueda(idReserva);
+	public List<Huesped> buscarHuespedesPorIdReservaBusqueda(int idReserva) {
+		return huespedDao.buscarHuespedesPorIdReservaBusqueda(idReserva);
 	}
 	
 }
