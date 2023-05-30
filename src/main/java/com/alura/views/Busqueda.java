@@ -34,6 +34,9 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -428,29 +431,94 @@ public class Busqueda extends JFrame {
 	 
 	 
 	 private void editarFilaReservaSeleccionada() {
-		 //Llenar tabla
-		 Reserva reserva;
-		 Integer filaSeleccionada=tbReservas.getSelectedRow();
-		 System.out.println("Fila seleccionada: "+tbReservas.getSelectedRow());		 
-		 //modelo.setValueAt(reserva, yMouse, xMouse);
-		 
-		 Integer id = (Integer) tbReservas.getValueAt(filaSeleccionada, 0); //id
-		 Date fechaEntrada = (Date) tbReservas.getValueAt(filaSeleccionada, 1); //Fecha Entrada
-		 Date fechaSalida = (Date) tbReservas.getValueAt(filaSeleccionada, 2); //Fecha Salida
-		 Integer valor = (Integer) tbReservas.getValueAt(filaSeleccionada, 3); //Valor
-		 String formaPago = (String) tbReservas.getValueAt(filaSeleccionada, 4); //Forma de Pago
-		 reserva = new Reserva(id, fechaEntrada, fechaSalida, valor, formaPago);
-		 
-		 editarReserva(reserva);
-		 //System.out.println(reserva);
-		 //tbReservas.setValueAt("100", filaSeleccionada, 3);
-		 
-					 
+		//Llenar tabla
+		Reserva reserva;
+		Integer filaSeleccionada=tbReservas.getSelectedRow();
+		System.out.println("Fila seleccionada: "+tbReservas.getSelectedRow());		 
+		//modelo.setValueAt(reserva, yMouse, xMouse);
+		System.out.println(tbReservas.getValueAt(filaSeleccionada, 1));
+		System.out.println(tbReservas.getValueAt(filaSeleccionada, 2));
+		
+		String fechaEntradaString = tbReservas.getValueAt(filaSeleccionada, 1).toString(); 
+		String fechaSalidaString = tbReservas.getValueAt(filaSeleccionada, 2).toString(); 
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+ 
+		Integer id;
+		Date fechaEntrada;
+		Date fechaSalida;
+		Integer valor;
+		String formaPago;
+		
+		id = (Integer) tbReservas.getValueAt(filaSeleccionada, 0); //id
+
+		try {
+			fechaEntrada = formatter.parse(fechaEntradaString); //Fecha Entrada
+			fechaSalida = formatter.parse(fechaSalidaString); //Fecha Salida
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+		
+		int diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
+		int valorTotalReserva = calcularTarifaEstadia(diasEstadia);
+		
+		valor = valorTotalReserva;//(Integer) tbReservas.getValueAt(filaSeleccionada, 3); //Valor
+		tbReservas.setValueAt(valorTotalReserva, filaSeleccionada, 3);
+		
+		if (fechaEntrada != null && fechaSalida != null) {
+			
+			//diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
+			//valorTotalReserva = calcularTarifaEstadia(diasEstadia);
+
+			if (diasEstadia > 0 && diasEstadia <= 365) {
+				tbReservas.setValueAt(valorTotalReserva, filaSeleccionada, 3);
+				
+			} else {
+				
+				//JOptionPane.showMessageDialog(null, "Favor de verificar fechas");
+				if (diasEstadia > 365) {
+					JOptionPane.showMessageDialog(null, "Lo sentimos, no se permiten reservaciones de mas de 365 días, favor verificar");
+				}
+				if (diasEstadia < 0) {
+					JOptionPane.showMessageDialog(null, "La fecha final debe ser mayor a la inicial, favor verificar");
+				}
+				tbReservas.setValueAt(0, filaSeleccionada, 3);
+			}
+		} else {
+			tbReservas.setValueAt(0, filaSeleccionada, 3);
+		}
+		
+		
+		formaPago = (String) tbReservas.getValueAt(filaSeleccionada, 4); //Forma de Pago
+		reserva = new Reserva(id, fechaEntrada, fechaSalida, valor, formaPago);
+		editarReserva(reserva); 
+		
+		//System.out.println(reserva);
+		//tbReservas.setValueAt("100", filaSeleccionada, 3);
+		
 	 } 
 	
 	 private void editarReserva(Reserva reserva) {
 		 this.reservaController.editarReserva(reserva);
 	 }
+	 
+	public int DiasEstadia(Date fechaInicio, Date fechaFin) {
+		java.sql.Date fechaEntrada =  new java.sql.Date(fechaInicio.getTime()) ;
+		java.sql.Date fechaSalida = new java.sql.Date(fechaFin.getTime());
+		
+		int dias = (int)((fechaSalida.getTime()  - 
+				fechaEntrada.getTime())/(1000 * 60 * 60 * 24));
+		
+		return dias;
+	
+	}
+	
+	
+	public int calcularTarifaEstadia(int dias) {
+		int valor;
+		valor = dias * 20;
+		return valor;
+	}
 	 
 	 private void LlenarTablaHuespedes() {
 		 //Llenar tabla
