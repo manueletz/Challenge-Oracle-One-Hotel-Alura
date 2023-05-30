@@ -187,7 +187,8 @@ public class ReservaDAO {
 	}
 
 	public void guardar(Reserva reserva) {
-		try(con) {
+		try {
+		//try(con) {
 			final PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO RESERVAS "
 					+"(FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO)"
@@ -234,7 +235,8 @@ public class ReservaDAO {
 	}
 
 	public void editarReserva(Reserva reserva) {
-		try(con) {
+		//try(con) {
+		try {
 			final PreparedStatement statement = con.prepareStatement(
 					"UPDATE RESERVAS SET FECHA_ENTRADA = ?, FECHA_SALIDA = ?, VALOR = ?, FORMA_PAGO = ? WHERE ID = ?");
 			
@@ -246,7 +248,9 @@ public class ReservaDAO {
 
 			try (statement) {
 				ejecutaEdicion(reserva, statement);
+				//con.close();
 				System.out.println("Edicion de Reserva con Id: "+reserva.getId());
+
 			} 
 		}catch (SQLException e) {
 			throw new RuntimeException(e);

@@ -145,7 +145,7 @@ public class Busqueda extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				tablaSeleccionada = 1;
-				System.out.println("tablaSeleccionada: "+tablaSeleccionada);
+				//System.out.println("tablaSeleccionada: "+tablaSeleccionada);
 			}
 		});
 		
@@ -189,7 +189,7 @@ public class Busqueda extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				tablaSeleccionada = 2;
-				System.out.println("tablaSeleccionada: "+tablaSeleccionada);
+				//System.out.println("tablaSeleccionada: "+tablaSeleccionada);
 			}
 		});
 		
@@ -431,72 +431,108 @@ public class Busqueda extends JFrame {
 	 
 	 
 	 private void editarFilaReservaSeleccionada() {
-		//Llenar tabla
-		Reserva reserva;
-		Integer filaSeleccionada=tbReservas.getSelectedRow();
-		System.out.println("Fila seleccionada: "+tbReservas.getSelectedRow());		 
-		//modelo.setValueAt(reserva, yMouse, xMouse);
-		System.out.println(tbReservas.getValueAt(filaSeleccionada, 1));
-		System.out.println(tbReservas.getValueAt(filaSeleccionada, 2));
-		
-		String fechaEntradaString = tbReservas.getValueAt(filaSeleccionada, 1).toString(); 
-		String fechaSalidaString = tbReservas.getValueAt(filaSeleccionada, 2).toString(); 
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
- 
 		Integer id;
 		Date fechaEntrada;
 		Date fechaSalida;
-		Integer valor;
+		Integer valor=0;
 		String formaPago;
+		Reserva reserva;
 		
-		id = (Integer) tbReservas.getValueAt(filaSeleccionada, 0); //id
-
-		try {
-			fechaEntrada = formatter.parse(fechaEntradaString); //Fecha Entrada
-			fechaSalida = formatter.parse(fechaSalidaString); //Fecha Salida
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
-		}
 		
-		int diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
-		int valorTotalReserva = calcularTarifaEstadia(diasEstadia);
+		if ( validacionesCamposReservas() == true ) {
 		
-		valor = valorTotalReserva;//(Integer) tbReservas.getValueAt(filaSeleccionada, 3); //Valor
-		tbReservas.setValueAt(valorTotalReserva, filaSeleccionada, 3);
-		
-		if (fechaEntrada != null && fechaSalida != null) {
+			Integer filaSeleccionada=tbReservas.getSelectedRow();
+			System.out.println("Fila seleccionada: "+tbReservas.getSelectedRow());		 
+			//modelo.setValueAt(reserva, yMouse, xMouse);
+	
 			
-			//diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
-			//valorTotalReserva = calcularTarifaEstadia(diasEstadia);
-
-			if (diasEstadia > 0 && diasEstadia <= 365) {
-				tbReservas.setValueAt(valorTotalReserva, filaSeleccionada, 3);
-				
-			} else {
-				
-				//JOptionPane.showMessageDialog(null, "Favor de verificar fechas");
-				if (diasEstadia > 365) {
-					JOptionPane.showMessageDialog(null, "Lo sentimos, no se permiten reservaciones de mas de 365 días, favor verificar");
-				}
-				if (diasEstadia < 0) {
-					JOptionPane.showMessageDialog(null, "La fecha final debe ser mayor a la inicial, favor verificar");
-				}
-				tbReservas.setValueAt(0, filaSeleccionada, 3);
+			String fechaEntradaString = tbReservas.getValueAt(filaSeleccionada, 1).toString(); 
+			String fechaSalidaString = tbReservas.getValueAt(filaSeleccionada, 2).toString(); 
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	 
+	
+			
+			id = (Integer) tbReservas.getValueAt(filaSeleccionada, 0); //id
+			
+			try {
+				fechaEntrada = formatter.parse(fechaEntradaString); //Fecha Entrada
+				fechaSalida = formatter.parse(fechaSalidaString); //Fecha Salida
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
 			}
-		} else {
-			tbReservas.setValueAt(0, filaSeleccionada, 3);
+			
+			int diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
+			int valorTotalReserva = calcularTarifaEstadia(diasEstadia);
+			
+			valor = valorTotalReserva;//(Integer) tbReservas.getValueAt(filaSeleccionada, 3); //Valor
+			tbReservas.setValueAt(valorTotalReserva, filaSeleccionada, 3);
+			formaPago = (String) tbReservas.getValueAt(filaSeleccionada, 4); //Forma de Pago
+			reserva = new Reserva(id, fechaEntrada, fechaSalida, valor, formaPago);
+
+			try {
+				editarReserva(reserva);
+				JOptionPane.showMessageDialog(null, "Datos guardados con éxito, Número de Reserva: "+reserva.getId());
+			} catch (Exception error) {
+				JOptionPane.showMessageDialog(null, "Lo sentimos no fue posible guardar los datos, Número de Reserva: "+reserva.getId());
+				throw new RuntimeException(error);
+
+			}
+		}
+	 } 
+	 
+	 private Boolean validacionesCamposReservas() {
+		 Date fechaEntrada = null;
+		 Date fechaSalida = null;
+		 int diasEstadia=0;
+		 int valorTotalReserva=0;
+		 
+		 Integer filaSeleccionada=tbReservas.getSelectedRow();
+		 
+		 //Verificar que fecha no son vacías
+		 if ( (tbReservas.getValueAt(filaSeleccionada, 1).toString().length() == 0 || tbReservas.getValueAt(filaSeleccionada, 2).toString().length() == 0) ) {
+			 JOptionPane.showMessageDialog(null, "La fecha de Inicio y Fin no deben esta vacías");
+			 return false;
+		 }
+		 
+		 //Verificar si el formato de las fechas es yyyy-MM-dd
+		 if (tbReservas.getValueAt(filaSeleccionada, 1) != null &&  tbReservas.getValueAt(filaSeleccionada, 2) != null) {
+			 
+			try {
+				String fechaEntradaString = tbReservas.getValueAt(filaSeleccionada, 1).toString(); 
+				String fechaSalidaString = tbReservas.getValueAt(filaSeleccionada, 2).toString();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				formatter.setLenient(false); //indulgente o no con el formato
+				fechaEntrada = formatter.parse(fechaEntradaString); //Fecha Entrada
+				fechaSalida = formatter.parse(fechaSalidaString); //Fecha Salida
+				diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
+				valorTotalReserva = calcularTarifaEstadia(diasEstadia);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Verificar el formato de las fechas de inicio y fin, el formato debe ser yyyy-MM-dd");
+				return false;
+			}
+		}
+		 
+		//Verificar si los días de estadía son mayores a 365 
+		if (diasEstadia > 365) {
+			JOptionPane.showMessageDialog(null, "Lo sentimos, no se permiten reservaciones de mas de 365 días, favor verificar");
+			return false;
 		}
 		
+		//Verificar si los días de estadía son cero o menores
+		if (diasEstadia <= 0) {
+			JOptionPane.showMessageDialog(null, "La fecha final debe ser mayor a la inicial, favor verificar");
+			return false;
+		} 
 		
-		formaPago = (String) tbReservas.getValueAt(filaSeleccionada, 4); //Forma de Pago
-		reserva = new Reserva(id, fechaEntrada, fechaSalida, valor, formaPago);
-		editarReserva(reserva); 
+		if (!List.of("Tarjeta de Crédito","Tarjeta de Débito","Dinero en Efectivo").contains(tbReservas.getValueAt(filaSeleccionada, 4).toString()) ) {
+			JOptionPane.showMessageDialog(null, "Favor de verificar el método de pago, pagos permitidos: Tarjeta de Crédito, Tarjeta de Débito o Dinero en Efectivo");
+			return false;
+		}
 		
-		//System.out.println(reserva);
-		//tbReservas.setValueAt("100", filaSeleccionada, 3);
-		
-	 } 
+		return true;  
+		 
+	 }
 	
 	 private void editarReserva(Reserva reserva) {
 		 this.reservaController.editarReserva(reserva);
