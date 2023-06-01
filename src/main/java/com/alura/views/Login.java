@@ -180,7 +180,7 @@ public class Login extends JFrame {
 		LabelUsuario.setBounds(65, 219, 107, 26);
 		panel.add(LabelUsuario);
 		
-		JLabel lblContrasea = new JLabel("CONTRASEÃ‘A");
+		JLabel lblContrasea = new JLabel("CONTRASEÑA");
 		lblContrasea.setForeground(SystemColor.textInactiveText);
 		lblContrasea.setFont(new Font("Roboto Black", Font.PLAIN, 20));
 		lblContrasea.setBounds(65, 316, 140, 26);
