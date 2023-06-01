@@ -51,4 +51,12 @@ public class HuespedController {
 		return huespedDao.buscarHuespedesPorIdReservaBusqueda(idReserva);
 	}
 	
+	public void editarHuesped(Huesped huesped) {
+		huespedDao.editarHuesped(huesped);
+	}
+
+	public void eliminarHuesped(int id) {
+		huespedDao.eliminarHuesped(id);		
+	}
+	
 }

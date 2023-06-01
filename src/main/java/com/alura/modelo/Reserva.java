@@ -9,15 +9,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class Reserva {
-	
 	private Integer id;
-	
 	private Date fechaEntrada;
-	
 	private Date fechaSalida;
-	
 	private Integer valor;
-	
 	private String formaPago;
 	
 	private List<Huesped> huespedes;
@@ -80,8 +75,6 @@ public class Reserva {
 	}
 	
 	public long DiasEntreDosFechas(Date fechaEntrada, Date fechaSalida){
-//	    Date firstDate = formatoFecha.parse("04/22/2020");
-//	    Date secondDate = formatoFecha.parse("04/27/2020");
 	    Date primeraFecha;
 	    Date segundaFecha;
 	    SimpleDateFormat formatoFecha = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
@@ -106,39 +99,4 @@ public class Reserva {
 		int tarifaDiaria = 20;
 		return diasEstadia * tarifaDiaria;
 	}
-
-	/*
-	private Integer id;
-	
-	private String nombre;
-	
-	private List<Producto> productos;
-
-	public Categoria(int id, String nombre) {
-		this.id = id;
-		this.nombre = nombre;
-	}
-	
-	public Integer getId() {
-		return this.id;
-	}
-	
-	@Override
-	public String toString() {
-		return this.nombre;
-	}
-
-	public void agregar(Producto producto) {
-		if (this.productos == null) {
-			this.productos = new ArrayList<>();
-		}
-		
-		this.productos.add(producto);
-	}
-
-	public List<Producto> getProductos() {
-		return this.productos;
-	}
-	*/
-
 }

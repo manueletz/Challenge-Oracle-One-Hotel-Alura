@@ -81,9 +81,6 @@ public class UsuarioDAO {
 	private void transformarResultSetEnUsuario(Usuario usuario, PreparedStatement pstm) throws SQLException {
 		try(ResultSet rst = pstm.getResultSet()){
 			while (rst.next()) {
-				//Usuario usuarioFinal = new Usuario(rst.getInt(1), rst.getString(2), rst.getString(3));
-				//System.out.println(huesped);
-				//usuario.add(usuarioFinal);
 				usuario.setId(rst.getInt(1));
 				usuario.setUsuario(rst.getString(2));
 				usuario.setClave(rst.getString(3));

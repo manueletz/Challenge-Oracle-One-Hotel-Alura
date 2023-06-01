@@ -272,7 +272,6 @@ public class ReservasView extends JFrame {
 		panel.add(txtFechaEntrada);
 
 		txtFechaSalida = new JDateChooser();
-		// txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.setDateFormatString("MM/dd/yyyy");
 
 		txtFechaSalida.getCalendarButton()
@@ -283,18 +282,13 @@ public class ReservasView extends JFrame {
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
 
-
-
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 		panel.add(txtFechaSalida);
 		
-		
-		
 		txtValor = new JTextField();// Se traslado para poderlo utilizar
 		JPanel btnsiguiente = new JPanel(); // se traslado para poder desactivar
-		
 		
 		txtFechaEntrada.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -323,11 +317,11 @@ public class ReservasView extends JFrame {
 						txtValor.setText(String.valueOf(valorTotalReserva));
 					} else {
 						btnsiguiente.setVisible(false);
-						//JOptionPane.showMessageDialog(null, "Favor de verificar fechas");
+						
 						if (diasEstadia > 365) {
 							JOptionPane.showMessageDialog(null, "Lo sentimos, no se permiten reservaciones de mas de 365 días, favor verificar");
 						}
-						if (diasEstadia < 0) {
+						if (diasEstadia <= 0) {
 							JOptionPane.showMessageDialog(null, "La fecha final debe ser mayor a la inicial, favor verificar");
 						}
 						txtValor.setText("");
@@ -350,8 +344,6 @@ public class ReservasView extends JFrame {
 		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
-		// txtValor.setText("10000"); //OJO HACER LA LOGICA PARA QUE CALCULE
-		// AUTOMATICAMENTE
 		txtValor.setColumns(10);
 
 		txtFormaPago = new JComboBox();
@@ -384,11 +376,7 @@ public class ReservasView extends JFrame {
 					registro.setVisible(true);
 					dispose();
 				} else {
-//					System.out.println("aqui paso2");
-//					System.out.println(inicio);
-//					if (inicio==false) {
-						JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
-//					}
+					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
 				}
 			}
 		});

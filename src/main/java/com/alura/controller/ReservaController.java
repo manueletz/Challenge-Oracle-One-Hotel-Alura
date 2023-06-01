@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.alura.dao.ReservaDAO;
 import com.alura.factory.ConnectionFactory;
-import com.alura.modelo.Huesped;
 import com.alura.modelo.Reserva;
 
 
@@ -19,10 +18,6 @@ public class ReservaController {
 		this.reservaDAO = new ReservaDAO(factory.recuperaConexion());
 	}
 
-//	public List<Reserva> listar() {
-//		return reservaDAO.listar();
-//	}
-	
 	public List<Reserva> buscar() {
 		return reservaDAO.buscar();
 	}
@@ -49,6 +44,11 @@ public class ReservaController {
 
 	public void editarReserva(Reserva reserva) {
 		reservaDAO.editarReserva(reserva);
+	}
+
+	public void eliminarReserva(int id) {
+		reservaDAO.eliminarReserva(id);
+		
 	}
 
 }

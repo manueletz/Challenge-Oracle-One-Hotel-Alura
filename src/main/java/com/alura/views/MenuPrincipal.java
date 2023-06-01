@@ -185,7 +185,7 @@ public class MenuPrincipal extends JFrame {
 		imagenSalir.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	
-	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
+	//Codigo que permite movimentar a janela pela tela seguindo a posicion de "x" e "y"	
 	private void headerMousePressed(java.awt.event.MouseEvent evt) {
         xMouse = evt.getX();
         yMouse = evt.getY();

@@ -20,8 +20,5 @@ public class DireferenciaFecha {
 	    long diffrence = time.convert(diff, TimeUnit.MILLISECONDS);
 
 	    System.out.println("The difference in days is : "+diffrence);
-		
 	}
-
-
 }

@@ -128,7 +128,7 @@ public class Busqueda extends JFrame {
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		
         String colTitlesReserva[] = {"Número de Reserva", "Fecha Check In", "Fecha Check Out", "Valor", "Forma de Pago"};
-        boolean[] isEditableReserva = {false,true,true,true,true};
+        boolean[] isEditableReserva = {false,true,true,false,true};
         
         modelo = new DefaultTableModel(colTitlesReserva, 0) {
         	 @Override
@@ -189,7 +189,6 @@ public class Busqueda extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				tablaSeleccionada = 2;
-				//System.out.println("tablaSeleccionada: "+tablaSeleccionada);
 			}
 		});
 		
@@ -297,9 +296,7 @@ public class Busqueda extends JFrame {
 					llenarTablaReservasPorTextoBuscado(txtBuscar.getText());
 					llenarTablaHuespedesPorTextoBuscado(txtBuscar.getText());
 				}
-				
 				panel.repaint();
-
 			}
 
 		});
@@ -328,7 +325,20 @@ public class Busqueda extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tablaSeleccionada==1) {
-					editarFilaReservaSeleccionada();
+					
+					if (tbReservas.getSelectedRow()>=0) {
+						editarFilaReservaSeleccionada();
+					}else {
+						JOptionPane.showMessageDialog(null, "Favor seleccione un fila para editar");
+					}
+				}
+				
+				if (tablaSeleccionada==2) {
+					if (tbHuespedes.getSelectedRow()>=0) {
+						editarFilaHuespedSeleccionada();
+					}else {
+						JOptionPane.showMessageDialog(null, "Favor seleccione un fila para editar");
+					}
 				}
 				
 			}
@@ -340,6 +350,35 @@ public class Busqueda extends JFrame {
 		btnEditar.add(lblEditar);
 		
 		JPanel btnEliminar = new JPanel();
+		btnEliminar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tablaSeleccionada==1) {
+					
+					if (tbReservas.getSelectedRow()>=0) {
+						eliminarFilaReservaSeleccionada();
+						txtBuscar.setText(null);
+						LlenarTablaResevas();
+						LlenarTablaHuespedes();
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "Favor seleccione un fila para editar");
+					}
+				}
+				
+				if (tablaSeleccionada==2) {
+					if (tbHuespedes.getSelectedRow()>=0) {
+						eliminarFilaHuespedSeleccionada();
+						txtBuscar.setText(null);
+						LlenarTablaResevas();
+						LlenarTablaHuespedes();
+					}else {
+						JOptionPane.showMessageDialog(null, "Favor seleccione un fila para editar");
+					}
+				}
+				
+			}
+		});
 		btnEliminar.setLayout(null);
 		btnEliminar.setBackground(new Color(12, 138, 199));
 		btnEliminar.setBounds(767, 508, 122, 35);
@@ -355,7 +394,7 @@ public class Busqueda extends JFrame {
 		setResizable(false);
 	}
 	
-//CÃ³digo que permite mover la ventana por la pantalla segÃºn la posiciÃ³n de "x" y "y"
+//Codigo que permite mover la ventana por la pantalla segun la posicion de "x" y "y"
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();
@@ -372,8 +411,6 @@ public class Busqueda extends JFrame {
 	 }
 	 
 	 private void LlenarTablaResevas() {
-		 
-		 //Llenar tabla
 		 List<Reserva> reserva = buscarReservas();
 		 
 		 try {
@@ -403,7 +440,6 @@ public class Busqueda extends JFrame {
 	 }
 	 
 	 private void llenarTablaReservasPorTextoBuscado(String textoBusqueda) {
-		 //Llenar tabla
 		List<Reserva> reserva;
 		 if (!verificarEsNumero(textoBusqueda)){
 			 reserva = buscarReservasPorTextoBusqueda(textoBusqueda);
@@ -413,9 +449,7 @@ public class Busqueda extends JFrame {
 		 
 		 
 		 try {
-			 //modeloHuesped.setNumRows(0);
 			 deleteAllTableRows(tbReservas);
-			 //tbHuespedes.setModel(new DefaultTableModel(null, new String[]{"Número de Huesped","Nombre", "Apellido", "Fecha de Nacimiento","Nacionalidad", "Telefono","Número de Reserva"}));
 				 for (Reserva reservas : reserva) {
 					 System.out.println(reservas);
 					 
@@ -426,7 +460,6 @@ public class Busqueda extends JFrame {
 			 } catch (Exception e) {
 				 throw e;
 			 }
-			
 	}
 	 
 	 
@@ -443,8 +476,6 @@ public class Busqueda extends JFrame {
 		
 			Integer filaSeleccionada=tbReservas.getSelectedRow();
 			System.out.println("Fila seleccionada: "+tbReservas.getSelectedRow());		 
-			//modelo.setValueAt(reserva, yMouse, xMouse);
-	
 			
 			String fechaEntradaString = tbReservas.getValueAt(filaSeleccionada, 1).toString(); 
 			String fechaSalidaString = tbReservas.getValueAt(filaSeleccionada, 2).toString(); 
@@ -465,7 +496,7 @@ public class Busqueda extends JFrame {
 			int diasEstadia = DiasEstadia(fechaEntrada,fechaSalida);
 			int valorTotalReserva = calcularTarifaEstadia(diasEstadia);
 			
-			valor = valorTotalReserva;//(Integer) tbReservas.getValueAt(filaSeleccionada, 3); //Valor
+			valor = valorTotalReserva;
 			tbReservas.setValueAt(valorTotalReserva, filaSeleccionada, 3);
 			formaPago = (String) tbReservas.getValueAt(filaSeleccionada, 4); //Forma de Pago
 			reserva = new Reserva(id, fechaEntrada, fechaSalida, valor, formaPago);
@@ -549,15 +580,168 @@ public class Busqueda extends JFrame {
 	
 	}
 	
-	
 	public int calcularTarifaEstadia(int dias) {
 		int valor;
 		valor = dias * 20;
 		return valor;
 	}
+	
+	 private void eliminarFilaReservaSeleccionada() {
+		Integer id;
+		Integer filaSeleccionada;
+
+		if (tbReservas.getSelectedRow()>=0) {
+			filaSeleccionada=tbReservas.getSelectedRow();
+			id = (Integer) tbReservas.getValueAt(filaSeleccionada, 0);
+			
+			try {
+				eliminarReserva(id);
+				JOptionPane.showMessageDialog(null, "Datos eliminados con éxito, Número de Reserva: "+ id);
+			} catch (Exception error) {
+				JOptionPane.showMessageDialog(null, "Lo sentimos no fue posible eliminar los datos, Número de Reserva: "+id);
+				throw new RuntimeException(error);
+
+			}
+		}
+	 } 
+	
+	private void eliminarReserva(int id) {
+		this.reservaController.eliminarReserva(id);
+	}
+	
+	 private void eliminarFilaHuespedSeleccionada() {
+		Integer id;
+		Integer filaSeleccionada;
+
+		if (tbHuespedes.getSelectedRow()>=0) {
+			filaSeleccionada=tbHuespedes.getSelectedRow();
+			id = (Integer) tbHuespedes.getValueAt(filaSeleccionada, 0);
+			
+			try {
+				eliminarHuesped(id);
+				JOptionPane.showMessageDialog(null, "Datos eliminados con éxito, Número de Huesped: "+ id);
+			} catch (Exception error) {
+				JOptionPane.showMessageDialog(null, "Lo sentimos no fue posible eliminar los datos, Número de Huesped: "+id);
+				throw new RuntimeException(error);
+
+			}
+		}
+	 } 
+	
+	private void eliminarHuesped(int id) {
+		this.huespedController.eliminarHuesped(id);
+	}
+	
+	 private void editarFilaHuespedSeleccionada() {
+		Integer id;
+		String nombre;
+		String apellido;
+		Date fechaNacimiento;
+		String nacionalidad;
+		String telefono;
+		Integer idReserva;
+		Huesped huesped;
+		
+		if ( validacionesCamposHuespedes() == true ) {
+		
+			Integer filaSeleccionada=tbHuespedes.getSelectedRow();
+			System.out.println("Fila seleccionada Huesped: "+tbHuespedes.getSelectedRow());		 
+			
+			id = (Integer) tbHuespedes.getValueAt(filaSeleccionada, 0);
+			nombre = (String) tbHuespedes.getValueAt(filaSeleccionada, 1);
+			apellido = (String) tbHuespedes.getValueAt(filaSeleccionada, 2);
+			
+			String fechaNacimientoString = tbHuespedes.getValueAt(filaSeleccionada, 3).toString();
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 	 
-	 private void LlenarTablaHuespedes() {
-		 //Llenar tabla
+			try {
+				fechaNacimiento = formatter.parse(fechaNacimientoString);
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
+			}
+			
+			nacionalidad = (String) tbHuespedes.getValueAt(filaSeleccionada, 4);
+			telefono = (String) tbHuespedes.getValueAt(filaSeleccionada, 5);
+			idReserva = (Integer) tbHuespedes.getValueAt(filaSeleccionada, 6);
+			
+			huesped = new Huesped(id, nombre, apellido, fechaNacimiento, nacionalidad, telefono, idReserva);
+
+			try {
+				editarHuesped(huesped);
+				JOptionPane.showMessageDialog(null, "Datos guardados con éxito, Número de Huesped: "+huesped.getId());
+			} catch (Exception error) {
+				JOptionPane.showMessageDialog(null, "Lo sentimos no fue posible guardar los datos, Número de Huesped: "+huesped.getId());
+				throw new RuntimeException(error);
+
+			}
+		}
+	 } 
+	
+	private Boolean validacionesCamposHuespedes() {
+		 Date fechaNacimiento = null;
+		 
+		 Integer filaSeleccionada=tbHuespedes.getSelectedRow();
+		 
+		 //Verificar que compos no se encuentren vacios
+		 if ( tbHuespedes.getValueAt(filaSeleccionada, 1).toString().length() == 0 ||
+			  tbHuespedes.getValueAt(filaSeleccionada, 2).toString().length() == 0 ||
+			  tbHuespedes.getValueAt(filaSeleccionada, 3).toString().length() == 0 ||
+			  tbHuespedes.getValueAt(filaSeleccionada, 4).toString().length() == 0 ||
+			  tbHuespedes.getValueAt(filaSeleccionada, 5).toString().length() == 0 
+			  ) {
+			 JOptionPane.showMessageDialog(null, "Favor verificar todos los campos deben estar llenos");
+			 return false;
+		 }
+		 
+		 //Verificar si el formato de las fechas es yyyy-MM-dd
+		 if (tbHuespedes.getValueAt(filaSeleccionada, 3) != null) {
+			 
+			try {
+				String fechaNacimientoString = tbHuespedes.getValueAt(filaSeleccionada, 3).toString(); 
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				formatter.setLenient(false); //indulgente o no con el formato
+				fechaNacimiento = formatter.parse(fechaNacimientoString); //Fecha Nacimiento
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Verificar el formato de las fechas de fecha de nacimiento, el formato debe ser yyyy-MM-dd");
+				return false;
+			}
+		}
+		 
+		
+		if (!List.of("afgano-afgana", "alemán-alemana", "árabe-árabe", "argentino-argentina",
+				"australiano-australiana", "belga-belga", "boliviano-boliviana", "brasileño-brasileña",
+				"camboyano-camboyana", "canadiense-canadiense", "chileno-chilena", "chino-china", 
+				"colombiano-colombiana", "coreano-coreana", "costarricense-costarricense", 
+				"cubano-cubana", "danés-danesa", "ecuatoriano-ecuatoriana", "egipcio-egipcia", 
+				"salvadoreño-salvadoreña", "escocés-escocesa", "español-española", "estadounidense-estadounidense", 
+				"estonio-estonia", "etiope-etiope", "filipino-filipina", "finlandés-finlandesa", "francés-francesa",
+				"galés-galesa", "griego-griega", "guatemalteco-guatemalteca", "haitiano-haitiana",
+				"holandés-holandesa", "hondureño-hondureña", "indonés-indonesa", "inglés-inglesa",
+				"iraquí-iraquí", "iraní-iraní", "irlandés-irlandesa", "israelí-israelí", "italiano-italiana",
+				"japonés-japonesa", "jordano-jordana", "laosiano-laosiana", "letón-letona", "letonés-letonesa",
+				"malayo-malaya", "marroquí-marroquí", "mexicano-mexicana", "nicaragüense-nicaragüense",
+				"noruego-noruega", "neozelandés-neozelandesa", "panameño-panameña", "paraguayo-paraguaya", 
+				"peruano-peruana", "polaco-polaca", "portugués-portuguesa", "puertorriqueño-puertorriqueño",
+				"dominicano-dominicana", "rumano-rumana", "ruso-rusa", "sueco-sueca", "suizo-suiza", 
+				"tailandés-tailandesa", "taiwanes-taiwanesa", "turco-turca", "ucraniano-ucraniana",
+				"uruguayo-uruguaya", "venezolano-venezolana", "vietnamita-vietnamita")
+		.contains(tbHuespedes.getValueAt(filaSeleccionada, 4).toString())) {
+			JOptionPane.showMessageDialog(null, "Favor de verificar el nacionalidad, ejemplo: salvadoreño-salvadoreña, estadounidense-estadounidense");
+			return false;
+		}
+			
+		return true;  
+		 
+	 }
+	
+	private void editarHuesped(Huesped huesped) {
+		this.huespedController.editarHuesped(huesped);
+	}
+	
+	private void LlenarTablaHuespedes() {
 		 List<Huesped> huesped = buscarHuespedes();
 		 
 		 try {
@@ -572,7 +756,6 @@ public class Busqueda extends JFrame {
 		 } catch (Exception e) {
 			 throw e;
 		 }
-		 
 	 }
 	 
 	private void cerrar() {
@@ -594,7 +777,6 @@ public class Busqueda extends JFrame {
 	}
 	 
 	private void llenarTablaHuespedesPorTextoBuscado(String textoBusqueda) {
-		 //Llenar tabla
 		List<Huesped> huesped;
 		 if (!verificarEsNumero(textoBusqueda)){
 			 huesped = buscarHuespedesPorTextoBusqueda(textoBusqueda);
@@ -604,9 +786,7 @@ public class Busqueda extends JFrame {
 		 
 		 
 		 try {
-			 //modeloHuesped.setNumRows(0);
 			 deleteAllTableRows(tbHuespedes);
-			 //tbHuespedes.setModel(new DefaultTableModel(null, new String[]{"Número de Huesped","Nombre", "Apellido", "Fecha de Nacimiento","Nacionalidad", "Telefono","Número de Reserva"}));
 			 for (Huesped huespedes : huesped) {
 				 System.out.println(huespedes);
 				 
@@ -622,7 +802,6 @@ public class Busqueda extends JFrame {
 	
 	private boolean verificarEsNumero(String textoEvaluacion) {
         boolean esNumero = (textoEvaluacion != null && textoEvaluacion.matches("[0-9]+"));
-        //System.out.println("IsNumeric: " + isNumeric);
         return esNumero;
     }
 	
@@ -632,7 +811,5 @@ public class Busqueda extends JFrame {
 	        model.removeRow(0);
 	    }
 	}
-	
-
 	    
 }

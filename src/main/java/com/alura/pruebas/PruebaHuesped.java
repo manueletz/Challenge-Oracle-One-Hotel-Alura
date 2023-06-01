@@ -12,7 +12,6 @@ public class PruebaHuesped {
 		Date date = new Date(); 
 		SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 		
-		//Date date = new Date();
 		Date datefinal=new Date();
 		try {
 		datefinal = dateformat.parse("18-05-2023");
@@ -21,8 +20,6 @@ public class PruebaHuesped {
 			throw new RuntimeException(e);
 		}
 		
-		
-		//Huesped huesped = new Huesped(1, "manuel", "estevez", '2023-05-05', "Salvadoreña", "77887788");
 		Huesped huesped = new Huesped(1, "manuel", "estevez", datefinal, "Salvadoreña", "77887788");
 		
 		System.out.println(huesped);

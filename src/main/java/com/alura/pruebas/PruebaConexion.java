@@ -58,8 +58,6 @@ public class PruebaConexion {
 	
 		System.out.println(resultado2);
 		
-		
-		
 		con.close();
 	}
 

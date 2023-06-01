@@ -42,8 +42,7 @@ public class RegistroHuesped extends JFrame {
 	private JLabel labelExit;
 	private JLabel labelAtras;
 	int xMouse, yMouse;
-	//private static Integer idReserva;
-	private static Integer idReserva=1;
+	private static Integer idReserva;
 	private HuespedController huespedController;
 	
 
@@ -286,44 +285,6 @@ public class RegistroHuesped extends JFrame {
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setForeground(SystemColor.black);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
-		
-		
-		/*
-		JPanel btnexit = new JPanel();
-
-		btnexit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MenuPrincipal principal = new MenuPrincipal();
-				principal.setVisible(true);
-				dispose();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnexit.setBackground(Color.red);
-				labelExit.setForeground(Color.white);
-			}			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				 btnexit.setBackground(Color.white);
-			     labelExit.setForeground(Color.black);
-			}
-		});
-		btnexit.setLayout(null);
-		//btnexit.setBackground(Color.white);
-		btnexit.setBackground(new Color(12, 138, 199));//MODIFICADO
-		btnexit.setBounds(857, 0, 53, 36);
-		contentPane.add(btnexit);
-		
-		
-		labelExit = new JLabel("X");
-		labelExit.setForeground(Color.WHITE); //MODIFICADO
-		labelExit.setBounds(0, 0, 53, 36);
-		btnexit.add(labelExit);
-		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
-		//labelExit.setForeground(SystemColor.black);
-		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
-		*/
 		
 		JPanel header = new JPanel();
 		header.setBounds(0, 0, 910, 14);

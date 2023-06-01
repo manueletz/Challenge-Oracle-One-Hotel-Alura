@@ -22,40 +22,6 @@ public class ReservaDAO {
 		this.con = con;
 	}
 
-	/*
-	public List<Reserva> listar() {
-		List<Reserva> resultado = new ArrayList<>();
-		
-		try {
-			var querySelect = "SELECT ID, FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO FROM RESERVAS";
-			System.out.println(querySelect);
-			
-			final PreparedStatement statement = con.prepareStatement(
-					querySelect);
-			
-			try(statement){
-				final ResultSet resultSet = statement.executeQuery();
-				
-				try(resultSet){
-					while(resultSet.next()) {
-						var categoria = new Reserva(resultSet.getInt("ID"),
-								resultSet.getDate("FECHA_ENTRADA"),
-								resultSet.getDate("FECHA_SALIDA"),
-								resultSet.getInt("VALOR"),
-								resultSet.getString("FORMA_PAGO"));
-						
-						resultado.add(categoria);
-					}
-				};
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		
-		return resultado;
-	}
-	*/
-
 	public List<Reserva> buscar() {
 
 		List<Reserva> reservas = new ArrayList<>();
@@ -75,19 +41,16 @@ public class ReservaDAO {
 		}
 	}
 
-
 	public List<Reserva> buscarReservasPorTextoBusqueda(String textoBusqueda) {
 		List<Reserva> reserva = new ArrayList<>();
 		
 		try {
 			String sql = "SELECT R.ID, R.FECHA_ENTRADA, R.FECHA_SALIDA, R.VALOR, FORMA_PAGO"
 					+ " FROM RESERVAS R, HUESPEDES H WHERE R.ID = H.ID_RESERVA AND H.APELLIDO = ?; ";
-					//+ " OR ID_RESERVA = ? ";
 			System.out.println(sql);
 		
 			try(PreparedStatement pstm = con.prepareStatement(sql);){
 				pstm.setString(1, textoBusqueda);
-				//pstm.setInt(2, Integer.valueOf(textoBusqueda));
 				pstm.execute();
 				
 				transformarResultSetEnReservas(reserva, pstm);
@@ -103,12 +66,10 @@ public class ReservaDAO {
 		
 		try {
 			String sql = "SELECT ID, FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO FROM RESERVAS WHERE ID = ?";
-					//+ " OR ID_RESERVA = ? ";
 			System.out.println(sql);
 		
 			try(PreparedStatement pstm = con.prepareStatement(sql);){
 				pstm.setInt(1, idReserva);
-				//pstm.setInt(2, Integer.valueOf(textoBusqueda));
 				pstm.execute();
 				
 				transformarResultSetEnReservas(reserva, pstm);
@@ -129,7 +90,6 @@ public class ReservaDAO {
 		}
 		
 	}
-	
 
 	public List<Reserva> listarConHuespedes() {
 		List<Reserva> resultado = new ArrayList<>();
@@ -188,7 +148,6 @@ public class ReservaDAO {
 
 	public void guardar(Reserva reserva) {
 		try {
-		//try(con) {
 			final PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO RESERVAS "
 					+"(FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO)"
@@ -205,16 +164,11 @@ public class ReservaDAO {
 	}
 
 	private void ejecutaRegistro(Reserva reserva, PreparedStatement statement) throws SQLException {
-	    //Date date = new Date();  
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-	    //String strDate= formatter.format(date);  
-	    //System.out.println(strDate); 
 	    
 	    String strFechaEntrada = formatter.format(reserva.getFechaEntrada());
 	    String strFechaSalida = formatter.format(reserva.getFechaSalida());
 		
-//		statement.setDate(1, (java.sql.Date) reserva.getFechaEntrada());
-//		statement.setDate(2, (java.sql.Date) reserva.getFechaSalida());
 		statement.setString(1, strFechaEntrada);
 		statement.setString(2, strFechaSalida);
 		statement.setInt(3, reserva.getValor());
@@ -231,7 +185,6 @@ public class ReservaDAO {
 						"Fue insertado la reserva con ID %s", reserva));
 			}
 		}
-		
 	}
 
 	public void editarReserva(Reserva reserva) {
@@ -240,15 +193,8 @@ public class ReservaDAO {
 			final PreparedStatement statement = con.prepareStatement(
 					"UPDATE RESERVAS SET FECHA_ENTRADA = ?, FECHA_SALIDA = ?, VALOR = ?, FORMA_PAGO = ? WHERE ID = ?");
 			
-//			statement.setDate(1, (java.sql.Date) reserva.getFechaEntrada());
-//			statement.setDate(2, (java.sql.Date) reserva.getFechaSalida());
-//			statement.setInt(3, reserva.getValor());
-//			statement.setString(4, reserva.getFormaPago());
-//			statement.setInt(5, reserva.getId());
-
 			try (statement) {
 				ejecutaEdicion(reserva, statement);
-				//con.close();
 				System.out.println("Edicion de Reserva con Id: "+reserva.getId());
 
 			} 
@@ -259,34 +205,34 @@ public class ReservaDAO {
 	
 	
 	private void ejecutaEdicion(Reserva reserva, PreparedStatement statement) throws SQLException {
-	    //Date date = new Date();  
 	    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
-	    //String strDate= formatter.format(date);  
-	    //System.out.println(strDate); 
 	    
 	    String strFechaEntrada = formatter.format(reserva.getFechaEntrada());
 	    String strFechaSalida = formatter.format(reserva.getFechaSalida());
-		
-//		statement.setDate(1, (java.sql.Date) reserva.getFechaEntrada());
-//		statement.setDate(2, (java.sql.Date) reserva.getFechaSalida());
-		statement.setString(1, strFechaEntrada);
+
+	    statement.setString(1, strFechaEntrada);
 		statement.setString(2, strFechaSalida);
 		statement.setInt(3, reserva.getValor());
 		statement.setString(4, reserva.getFormaPago());
 		statement.setInt(5, reserva.getId());
 		
 		statement.execute();
-		
-//		final ResultSet resultSet = statement.getGeneratedKeys();
-//		
-//		try(resultSet){
-//			while (resultSet.next()) {
-//				reserva.setId(resultSet.getInt(1));
-//				System.out.println(String.format(
-//						"Fue modificado la reserva con ID %s", reserva));
-//			}
-//		}
-		
+	}
+
+	public void eliminarReserva(int id) {
+		try {
+			final PreparedStatement statement = con.prepareStatement(
+					"DELETE FROM RESERVAS WHERE ID = ?");
+
+			try (statement) {
+				statement.setInt(1, id);
+				statement.execute();
+				System.out.println("Eliminación de Reserva con Id: " + id);
+
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}	
 	}
 	
 

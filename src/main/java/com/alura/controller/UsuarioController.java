@@ -1,6 +1,5 @@
 package com.alura.controller;
 
-import com.alura.dao.ReservaDAO;
 import com.alura.dao.UsuarioDAO;
 import com.alura.factory.ConnectionFactory;
 import com.alura.modelo.Usuario;
@@ -8,7 +7,6 @@ import com.alura.modelo.Usuario;
 public class UsuarioController {
 	
 	private UsuarioDAO usuarioDAO;
-	private Usuario usuario;
 
 	public UsuarioController() {
 		var factory = new ConnectionFactory();
