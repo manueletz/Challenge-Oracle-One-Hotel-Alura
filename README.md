@@ -1,4 +1,5 @@
 <h2>Challenge Oracle One - Hotel Alura</h2>
+![](imagenesRepositorio/logo_Hotel_Alura.png)
 
 Repositorio de la resolución del desafío del Challenge de creación de un sistema de reserva para el Hotel Alura,
 impartido por el Programa Oracle One en coordinación con Alura Latinoamérica.
@@ -43,7 +44,7 @@ El sistema utiliza la base de datos de mysql, se valida el usuario y clave con l
 la información es correcta, se da acceso a sistema.
 
 
-![](imgRepositorio/ventana-login.png)
+![](imagenesRepositorio/ventana-login.png)
 
 ## 2. Menú principal
 
