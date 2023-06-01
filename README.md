@@ -1,5 +1,5 @@
 <h2>Challenge Oracle One - Hotel Alura</h2>
-![](https://github.com/manueletz/Challenge-Oracle-One-Hotel-Alura/blob/repositorio-base/imagenesRepositorio/logo_hotel_alura.png)
+![](https://github.com/manueletz/Challenge-Oracle-One-Hotel-Alura/blob/repositorio-base/imagenesRepositorio/logo.png)
 
 
 Repositorio de la resolución del desafío del Challenge de creación de un sistema de reserva para el Hotel Alura,
