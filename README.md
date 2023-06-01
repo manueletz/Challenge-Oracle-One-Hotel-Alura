@@ -31,3 +31,90 @@ El líder del proyecto puso a disposición un Diagrama de Entidad Relación que 
 - Biblioteca JCalendar
 - MySql
 - Plugin WindowBuilder
+
+# Pantallas
+
+## 1. Login
+
+Por el momento el sistema de login hace un llamado a la base de datos preguntando si la información de usuario y contraseña
+ingresados en el formulario se encuentran ingresadas en la respectiva tabla llamada user.
+
+El sistema utiliza la base de datos de mysql, se valida el usuario y clave con los datos registrados en la base de datos, si
+la información es correcta, se da acceso a sistema.
+
+
+![](imgRepositorio/ventana-login.png)
+
+## 2. Menú principal
+
+Menú de todas las funcionalidades que posee el sistema, registro de reserva y busqueda.
+
+![](imgRepositorio/ventana-principal.png)
+
+## 3. Registro de reservas
+
+Ventana donde se ingresar los datos para realizar un registro de una reserva, se solicita fecha de entrada, fecha salida, valor,
+Forma de Pago.
+
+![](imgRepositorio/ventana-reservas.png)
+
+## 3. Registro Huespedes
+
+Luego de realizar una reserva, se procede al registro del Huesped en esta ventana se solicita los datos del huesped: nombre, apellido,
+fecha de nacimiento, nacionalidad y teléfono.
+
+![](imgRepositorio/ventana-Huespedes.png)
+
+## 4. Sistema de Busqueda
+
+Pantalla donde se puede ver todas las reservas registradas, asi como todos los huespedes.
+Detalle de todas las reservas y los huespedes.
+
+![](imgRepositorio/ventana-listar-reservas.png) ![](imgRepositorio/Ventana-listar-huespedes.png)
+
+El sistema permite realizar busquedas por dos elementos:
+ * Id de reserva
+ * Apellido del huésped
+
+### Busqueda por id de reserva
+
+![](imgRepositorio/Busqueda-huesped-por-id-reserva.png)  ![](imgRepositorio/busqueda-reserva-por-id.png)
+
+### Busqueda por apellido de huesped
+
+![](imgRepositorio/Busqueda-huesped-por-apellido.png)  ![](imgRepositorio/busqueda-reserva-por-apellido-huesped.png)
+
+Se puede realizar la edicion de los campos de la tablas desplegadas de reservas y huespedes.
+
+![](imgRepositorio/confirmacion-de-edicion.png)
+
+Se permite la eliminación de registros
+
+![](imgRepositorio/confirmacion-eliminacion.png)
+
+## Video Funcionamiento
+
+Link Video en Youtube: pendiente
+
+![](imgRepositorio/gifFuncionamiento.gif)
+
+## Autor
+
+![](imgRepositorio/ppgithub.png)
+
+<a href="https://www.linkedin.com/in/manuel-estevez-perfil/"><img src="imgRepositorio/linkedinlogo.svg"></a>
+
+[Manuel Estevez (manueletz)](https://github.com/manueletz)
+
+
+
+
+
+
+
+
+
+
+
+
+
