@@ -1,5 +1,5 @@
 <h2>Challenge Oracle One - Hotel Alura</h2>
-![](https://github.com/manueletz/Challenge-Oracle-One-Hotel-Alura/blob/repositorio-base/imagenesRepositorio/logo.png)
+![](imagenesRepositorio/logo.png)
 
 
 
