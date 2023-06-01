@@ -1,10 +1,10 @@
-<h2>Challenge Oracle One - Hotel Alura</h2>
+# Challenge Oracle One - Hotel Alura
 ![](imagenesRepositorio/logo.png)
-
-
+## Descripción
 
 Repositorio de la resolución del desafío del Challenge de creación de un sistema de reserva para el Hotel Alura,
 impartido por el Programa Oracle One en coordinación con Alura Latinoamérica.
+
 
 ✔️ **Antecedentes**
 
