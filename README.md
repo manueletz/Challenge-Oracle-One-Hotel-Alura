@@ -46,34 +46,34 @@ El sistema utiliza la base de datos de mysql, se valida el usuario y clave con l
 la información es correcta, se da acceso a sistema.
 
 
-![](imagenesRepositorio/ventana-login.png)
+![](imagenesRepositorio/login.png)
 
 ## 2. Menú principal
 
 Menú de todas las funcionalidades que posee el sistema, registro de reserva y busqueda.
 
-![](imgRepositorio/ventana-principal.png)
+![](imagenesRepositorio/pantalla-principal.png)
 
 ## 3. Registro de reservas
 
 Ventana donde se ingresar los datos para realizar un registro de una reserva, se solicita fecha de entrada, fecha salida, valor,
 Forma de Pago.
 
-![](imgRepositorio/ventana-reservas.png)
+![](imagenesRepositorio/pantalla-reserva.png)
 
 ## 3. Registro Huespedes
 
 Luego de realizar una reserva, se procede al registro del Huesped en esta ventana se solicita los datos del huesped: nombre, apellido,
 fecha de nacimiento, nacionalidad y teléfono.
 
-![](imgRepositorio/ventana-Huespedes.png)
+![](imagenesRepositorio/pantalla-huesped.png)
 
 ## 4. Sistema de Busqueda
 
 Pantalla donde se puede ver todas las reservas registradas, asi como todos los huespedes.
 Detalle de todas las reservas y los huespedes.
 
-![](imgRepositorio/ventana-listar-reservas.png) ![](imgRepositorio/Ventana-listar-huespedes.png)
+![](imagenesRepositorio/pantalla-listar-reservas.png) ![](imagenesRepositorio/Ventana-listar-huespedes.png)
 
 El sistema permite realizar busquedas por dos elementos:
  * Id de reserva
@@ -81,31 +81,31 @@ El sistema permite realizar busquedas por dos elementos:
 
 ### Busqueda por id de reserva
 
-![](imgRepositorio/Busqueda-huesped-por-id-reserva.png)  ![](imgRepositorio/busqueda-reserva-por-id.png)
+![](imagenesRepositorio/busqueda-por-id.png)  
 
 ### Busqueda por apellido de huesped
 
-![](imgRepositorio/Busqueda-huesped-por-apellido.png)  ![](imgRepositorio/busqueda-reserva-por-apellido-huesped.png)
+![](imagenesRepositorio/busqueda-por-apellido.png)  
 
 Se puede realizar la edicion de los campos de la tablas desplegadas de reservas y huespedes.
 
-![](imgRepositorio/confirmacion-de-edicion.png)
+![](imagenesRepositorio/confirmacion-edicion.png)
 
 Se permite la eliminación de registros
 
-![](imgRepositorio/confirmacion-eliminacion.png)
+![](imagenesRepositorio/eliminar-huesped.png)
 
 ## Video Funcionamiento
 
 Link Video en Youtube: pendiente
 
-![](imgRepositorio/gifFuncionamiento.gif)
+![](imagenesRepositorio/gifFuncionamiento.gif)
 
 ## Autor
 
-![](imgRepositorio/ppgithub.png)
+![](imagenesRepositorio/ppgithub.png)
 
-<a href="https://www.linkedin.com/in/manuel-estevez-perfil/"><img src="imgRepositorio/linkedinlogo.svg"></a>
+<a href="https://www.linkedin.com/in/manuel-estevez-perfil/"><img src="imagenesRepositorio/linkedinlogo.svg"></a>
 
 [Manuel Estevez (manueletz)](https://github.com/manueletz)
 
