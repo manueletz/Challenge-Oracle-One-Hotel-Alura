@@ -93,7 +93,7 @@ Se puede realizar la edicion de los campos de la tablas desplegadas de reservas 
 
 Se permite la eliminación de registros
 
-![](imagenesRepositorio/eliminar-huesped.png)
+![](imagenesRepositorio/eliminacion-huespedes.png)
 
 ## Video Funcionamiento
 
