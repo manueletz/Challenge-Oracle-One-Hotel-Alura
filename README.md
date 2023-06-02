@@ -97,7 +97,7 @@ Se permite la eliminación de registros
 
 ## Video Funcionamiento
 
-Link Video en Youtube: https://youtu.be/rKBT_E-J75s
+Link Video en Youtube: https://youtu.be/cAMs7px4Ln4
 
 ![](imagenesRepositorio/gifFuncionamiento.gif)
 
