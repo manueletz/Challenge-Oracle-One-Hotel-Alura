@@ -99,20 +99,13 @@ Se permite la eliminación de registros
 
 Link Video en Youtube: https://youtu.be/cAMs7px4Ln4
 
-![](imagenesRepositorio/gifFuncionamiento.gif)
-
 ## Autor
 
-![](imagenesRepositorio/ppgithub.png)
+Manuel Estévez
 
 <a href="https://www.linkedin.com/in/manuel-estevez-perfil/"><img src="imagenesRepositorio/linkedinlogo.svg"></a>
 
 [Manuel Estevez (manueletz)](https://github.com/manueletz)
-
-
-
-
-
 
 
 
