@@ -97,7 +97,7 @@ Se permite la eliminación de registros
 
 ## Video Funcionamiento
 
-Link Video en Youtube: pendiente
+Link Video en Youtube: https://youtu.be/rKBT_E-J75s
 
 ![](imagenesRepositorio/gifFuncionamiento.gif)
 
