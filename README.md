@@ -101,8 +101,6 @@ Link Video en Youtube: https://youtu.be/cAMs7px4Ln4
 
 ## Autor
 
-Manuel Estévez
-
 <a href="https://www.linkedin.com/in/manuel-estevez-perfil/"><img src="imagenesRepositorio/linkedinlogo.svg"></a>
 
 [Manuel Estevez (manueletz)](https://github.com/manueletz)
